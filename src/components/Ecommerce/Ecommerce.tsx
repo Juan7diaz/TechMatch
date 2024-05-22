@@ -1,9 +1,18 @@
-import { Flex, Box, useColorModeValue, Stack, Input } from "@chakra-ui/react";
+import {
+  Flex,
+  Box,
+  useColorModeValue,
+  Input,
+  Button,
+  IconButton,
+  SimpleGrid,
+  Container,
+} from "@chakra-ui/react";
 import { data } from "./data";
 import CardProduct from "./CardProduct";
-import Heading from "../common/Heading";
 import { KeyboardEvent, useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
+import { Filter } from "../common/icons/Filter";
 
 function Ecommerce() {
   let [searchParams, setSearchParams] = useSearchParams();
@@ -27,12 +36,8 @@ function Ecommerce() {
   };
 
   return (
-    <Box mt={-19}>
-      <Flex justify="center">
-        <Heading />
-      </Flex>
-
-      <Flex justify="center" p={5}>
+    <Box px={20}>
+      <Flex justify="center" pt={5}>
         <Input
           value={query}
           onChange={handleChange}
@@ -40,31 +45,61 @@ function Ecommerce() {
           placeholder="Buscar..."
           bg={useColorModeValue("white", "gray.800")}
           color={useColorModeValue("gray.800", "white")}
-          borderWidth="1px"
-          borderColor={useColorModeValue("gray.200", "gray.700")}
-          rounded="full"
+          borderColor={"black"}
           maxW="lg"
-          focusBorderColor="#f48c06"
-          _focus={{
-            borderColor: "#f48c06",
-            boxShadow: "0 0 0 1px #f48c06",
-            transform: "scale(1.05)",
+          borderRadius={0}
+          borderTopColor={"white"}
+          borderRightColor={"white"}
+          borderStartColor={"white"}
+          _hover={{
+            borderTopColor: "white",
+            borderRightColor: "white",
+            borderStartColor: "white",
           }}
         />
+        <IconButton
+          colorScheme="transparent"
+          border={"1px"}
+          color={"black"}
+          aria-label="Search database"
+          borderRadius={0}
+          icon={<Filter />}
+        />
+        <Button
+          borderRadius={100}
+          ml={5}
+          bg={"blue.400"}
+          color={"white"}
+          onClick={() => setSearchParams({ search: query })}
+        >
+          Buscar Pieza
+        </Button>
+      </Flex>
+      <Flex justify="center" p={5}>
+        <Button
+          borderRadius={100}
+          bg={"blue.400"}
+          color={"white"}
+          onClick={() => setSearchParams({})}
+        >
+          Añadir pieza
+        </Button>
       </Flex>
 
-      <Stack spacing={5} p={5}>
-        {data.map((product, i) => (
-          <CardProduct
-            key={i}
-            tag={product.tag}
-            imageURL={product.imageURL}
-            name={product.name}
-            price={product.price}
-            numReviews={product.numReviews}
-          />
-        ))}
-      </Stack>
+      <Container maxW="container.xl" px={{ base: 4, sm: 6, md: 8 }} py={8}>
+        <SimpleGrid minChildWidth="300px" spacing={5}>
+          {data.map((product, i) => (
+            <CardProduct
+              key={i}
+              tag={product.tag}
+              imageURL={product.imageURL}
+              name={product.name}
+              price={product.price}
+              numReviews={product.numReviews}
+            />
+          ))}
+        </SimpleGrid>
+      </Container>
     </Box>
   );
 }
