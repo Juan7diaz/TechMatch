@@ -4,7 +4,6 @@ import {
   useColorModeValue,
   Input,
   Button,
-  IconButton,
   SimpleGrid,
   Container,
 } from "@chakra-ui/react";
@@ -12,7 +11,7 @@ import { data } from "./data";
 import CardProduct from "./CardProduct";
 import { KeyboardEvent, useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
-import { Filter } from "../common/icons/Filter";
+import DrawerFilter from "../DrawerFilter/DrawerFilter";
 
 function Ecommerce() {
   let [searchParams, setSearchParams] = useSearchParams();
@@ -57,14 +56,7 @@ function Ecommerce() {
             borderStartColor: "white",
           }}
         />
-        <IconButton
-          colorScheme="transparent"
-          border={"1px"}
-          color={"black"}
-          aria-label="Search database"
-          borderRadius={0}
-          icon={<Filter />}
-        />
+       <DrawerFilter />
         <Button
           borderRadius={100}
           ml={5}
