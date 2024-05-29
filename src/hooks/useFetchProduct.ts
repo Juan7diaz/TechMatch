@@ -2,7 +2,10 @@ import { useQuery } from "react-query";
 import { Product } from "../interfaces/product";
 import { useEffect } from "react";
 
-const useFetchProduct = (query:string, searchParams:URLSearchParams) => {
+const useFetchProduct = (searchParams:URLSearchParams) => {
+
+  const query = searchParams.get("search") || ""
+
   const data = useQuery<Product[]>({
     queryKey: "products",
     queryFn: async () => {

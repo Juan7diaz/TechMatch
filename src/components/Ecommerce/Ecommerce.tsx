@@ -11,7 +11,7 @@ function Ecommerce() {
   const { handleChange, handleKeyPress, query, setSearchParams, searchParams } =
     useSearch();
 
-  const { data } = useFetchProduct(query, searchParams);
+  const { data } = useFetchProduct(searchParams);
 
   return (
     <Box px={20}>
@@ -31,12 +31,7 @@ function Ecommerce() {
           <SimpleGrid minChildWidth="300px" spacing={5}>
             {data?.length ? (
               data.map((product, i) => (
-                <CardProduct
-                  key={i}
-                  imageURL={product.imagen}
-                  name={product.nombre}
-                  price={product.precio}
-                />
+                <CardProduct key={i} product={product} />
               ))
             ) : (
               <Box>No hay productos</Box>
