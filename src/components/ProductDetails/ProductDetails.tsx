@@ -26,7 +26,7 @@ const ProductDetails = () => {
   const { data } = useQuery<Product>({
     queryKey: ["product", id],
     queryFn: async () => {
-      const response = await fetch(`http://localhost:8080/api/v1/piezas/${id}`);
+      const response = await fetch(`https://tecmatch.azurewebsites.net/api/v1/piezas/${id}`);
       return response.json();
     },
   });
