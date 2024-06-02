@@ -21,7 +21,7 @@ function CardProduct({ product }: { product: Product }) {
   return (
     <Box
       as={Link}
-      to={`/product/${product.id}`}
+      to={`/product/${product.id}?type=${product.tipoPieza}`}
       bg={"white"}
       pb={10}
       maxW={cardWidth}

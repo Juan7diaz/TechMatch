@@ -3,39 +3,42 @@ import CardProduct from "./CardProduct";
 import DrawerFilter from "../DrawerFilter/DrawerFilter";
 import InputSearch from "../common/ui/InputSearch";
 import ButtonSearchProduct from "../common/ui/ButtonSearchProduct";
-import useSearch from "../../hooks/useSearch";
-import useFetchProduct from "../../hooks/useFetchProduct";
 import { Suspense } from "react";
+import useProductStore from "../../store/useProductStore";
+import Loader from "../common/ui/Loader";
+import useSearch from "../../hooks/useSearch";
+import useFilterProduct from "../../hooks/useFilterProduct";
+import { Product } from "../../interfaces/product";
 
 function Ecommerce() {
-  const { handleChange, handleKeyPress, query, setSearchParams, searchParams } =
-    useSearch();
 
-  const { data } = useFetchProduct(searchParams);
+  const isLoading = useProductStore((state) => state.isLoading);
+
+  const object_useSearch = useSearch()
+  const {filteredProducts, haveProducts} = useFilterProduct();
 
   return (
     <Box px={20}>
       <Flex justify="center" pt={5}>
-        <InputSearch
-          handleKeyPress={handleKeyPress}
-          handleChange={handleChange}
-          query={query}
-        />
+        <InputSearch object_useSearch={object_useSearch}/>
         <DrawerFilter />
-        <ButtonSearchProduct setSearchParams={setSearchParams} query={query} />
+        <ButtonSearchProduct object_useSearch={object_useSearch}/>
       </Flex>
       <Flex justify="center" p={5}></Flex>
 
       <Suspense fallback={<div>Loading...</div>}>
         <Container maxW="container.xl" px={{ base: 4, sm: 6, md: 8 }} py={8}>
           <SimpleGrid minChildWidth="300px" spacing={5}>
-            {data?.length ? (
-              data.map((product, i) => (
-                <CardProduct key={i} product={product} />
-              ))
-            ) : (
-              <Box>No hay productos</Box>
+            {isLoading && <Loader />}
+
+            {!isLoading && !haveProducts() && (
+              <Box>No hay productos encontrados</Box>
             )}
+
+            {!isLoading && haveProducts() &&
+              filteredProducts?.map((product: Product) => (
+                <CardProduct key={product.id} product={product} />
+              ))}
           </SimpleGrid>
         </Container>
       </Suspense>

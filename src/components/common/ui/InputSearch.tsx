@@ -1,19 +1,12 @@
 import { Input } from "@chakra-ui/react";
-import React from "react";
+import { UseSearch } from "../../../hooks/useSearch";
 
-
-interface InputSearchProps {
-  query: string;
-  handleChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
-  handleKeyPress: (event: React.KeyboardEvent<HTMLInputElement>) => void;
-}
-
-const InputSearch = ({ query, handleChange,  handleKeyPress}: InputSearchProps ) => {
+const InputSearch = ({ object_useSearch }: { object_useSearch: UseSearch }) => {
   return (
     <Input
-      value={query}
-      onChange={handleChange}
-      onKeyUp={handleKeyPress}
+      value={object_useSearch.query}
+      onChange={object_useSearch.handleChange}
+      onKeyUp={object_useSearch.handleKeyPress}
       placeholder="Buscar..."
       bg={"white"}
       color={"black"}

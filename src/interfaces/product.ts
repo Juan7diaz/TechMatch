@@ -1,3 +1,14 @@
+export interface Ram {
+  id: string
+  capacidad: number
+  velocidad: number
+  ECC: boolean
+  regBuf: string
+  ancho_banda: number
+  pieza: Product
+}
+
+
 export interface Product {
   id: string
   nombre: string
@@ -7,6 +18,7 @@ export interface Product {
   imagen: string
   fabricante: Fabricante
   socket: Socket
+  tipoPieza: "RAM" | "GRAFICA" | "PLACA" | "PROCESADOR" | "SOCKET"
 }
 
 export interface Fabricante {

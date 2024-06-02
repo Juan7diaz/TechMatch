@@ -1,7 +1,18 @@
 import { useEffect, useState, KeyboardEvent } from "react";
 import { useSearchParams } from "react-router-dom";
 
-const useSearch = () => {
+export interface UseSearch {
+  query: string;
+  setQuery: (query: string) => void;
+  handleChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  handleKeyPress: (event: KeyboardEvent<HTMLInputElement>) => void;
+  setSearchParams: (params: Record<string, string>) => void;
+  searchParams: URLSearchParams;
+  resetQueryAndSearchParams: () => void;
+}
+
+
+const useSearch = (): UseSearch => {
 
   let [searchParams, setSearchParams] = useSearchParams();
 

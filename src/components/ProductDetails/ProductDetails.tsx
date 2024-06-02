@@ -10,26 +10,34 @@ import {
 } from "@chakra-ui/react";
 import { FaStar, FaStarHalfAlt } from "react-icons/fa";
 import { BsTools, BsHeart, BsEye, BsArrowReturnLeft } from "react-icons/bs";
-import { useNavigate, useParams } from "react-router-dom";
-import { useQuery } from "react-query";
-import { Product } from "../../interfaces/product";
+import { useNavigate, useParams, useSearchParams } from "react-router-dom";
 import { handleImageError } from "../../utils/handleImageError";
+import RamDetails from "./types/RamDetails";
+import Loader from "../common/ui/Loader";
+import { useFetchByType } from "../../hooks/useFetch";
+import ErrorPage from "../common/ui/ErrorPage";
 
-
-const DEFAULT_IMAGE_URL = "https://static.vecteezy.com/system/resources/thumbnails/004/141/669/small_2x/no-photo-or-blank-image-icon-loading-images-or-missing-image-mark-image-not-available-or-image-coming-soon-sign-simple-nature-silhouette-in-frame-isolated-illustration-vector.jpg"
+const DEFAULT_IMAGE_URL =
+  "https://static.vecteezy.com/system/resources/thumbnails/004/141/669/small_2x/no-photo-or-blank-image-icon-loading-images-or-missing-image-mark-image-not-available-or-image-coming-soon-sign-simple-nature-silhouette-in-frame-isolated-illustration-vector.jpg";
 
 const ProductDetails = () => {
   const navigate = useNavigate();
-
   let { id } = useParams();
 
-  const { data } = useQuery<Product>({
-    queryKey: ["product", id],
-    queryFn: async () => {
-      const response = await fetch(`https://tecmatch.azurewebsites.net/api/v1/piezas/${id}`);
-      return response.json();
-    },
+  let [searchParams] = useSearchParams();
+
+  const { data, isLoading, isError } = useFetchByType({
+    type: searchParams.get("type") || "",
+    id: id || "",
   });
+
+  if (isLoading) {
+    return <Loader />;
+  }
+
+  if(isError) {
+    return <ErrorPage/>
+  }
 
   return (
     <Flex
@@ -51,10 +59,10 @@ const ProductDetails = () => {
         </Box>
         <Image
           rounded="md"
-          src={data?.imagen}
+          src={data?.pieza.imagen}
           alt="Product Image"
           objectFit="cover"
-          onError={(e) =>  handleImageError(e, DEFAULT_IMAGE_URL)}
+          onError={(e) => handleImageError(e, DEFAULT_IMAGE_URL)}
           maxH={{ base: 250, sm: 300, md: 350, lg: 400 }}
           minH={{ base: 250, sm: 300, md: 350, lg: 400 }}
           maxW={{ base: 250, sm: 300, md: 350, lg: 400 }}
@@ -74,9 +82,7 @@ const ProductDetails = () => {
       </Box>
 
       <Stack spacing={4} flex="1">
-        <Heading size="md">
-          {data?.nombre}
-        </Heading>
+        <Heading size="md">{data?.pieza.nombre}</Heading>
         <Flex alignItems="center">
           <HStack spacing={1}>
             <Icon as={FaStar} color="yellow.400" />
@@ -87,17 +93,9 @@ const ProductDetails = () => {
           </HStack>
           <Text ml={2}>4.0</Text>
         </Flex>
-        <Stack spacing={2}>
-          <Text fontWeight="bold" fontSize="xl">
-            Precio: $ {data?.precio.toFixed(2)}
-          </Text>
-          <Text>Capacidad: no aplica</Text>
-          <Text>Voltaje: {data?.voltaje}</Text>
-          <Text>Socket: {data?.socket.nombre} - {data?.socket.tipoSocket.nombre} </Text>
-          <Text>Velocidad: no aplica</Text>
-          <Text>ECC: no aplica</Text>
-          <Text>Latencia: no aplica</Text>
-        </Stack>
+
+        {data?.pieza.tipoPieza === "RAM" && <RamDetails ram={data} />}
+
         <HStack spacing={4}>
           <HStack spacing={2} color="blue.500">
             <Icon as={BsTools} />
