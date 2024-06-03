@@ -1,5 +1,5 @@
 import { useQuery } from "react-query";
-import { Product, Ram } from "../interfaces/product";
+import { Procesador, Product, Ram } from "../interfaces/product";
 import { getPiezaBytypeAndId, getPiezas } from "../services/api";
 
 export const useFetchProduct = () => {
@@ -10,7 +10,7 @@ export const useFetchProduct = () => {
 }
 
 
-export const useFetchByType = ({
+export const useFetchByType = <T extends Ram | Procesador>({
   type,
   id
 }: {
@@ -19,7 +19,7 @@ export const useFetchByType = ({
 
 }) => {
 
-  return useQuery<Ram>({
+  return useQuery<T>({
     queryKey: [`${type}-${id}`],
     queryFn: () => getPiezaBytypeAndId(type, id)
   })

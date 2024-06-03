@@ -16,6 +16,7 @@ const RamDetails = ({ ram }: {ram: Ram}) => {
     <Text>Capacidad: {ram.capacidad}</Text>
     <Text>Ancho de banda: {ram.ancho_banda}</Text>
     <Text>Buffer: {ram.regBuf}</Text>
+    <Text>Modelo: {ram.pieza.modelo}</Text>
   </Stack>
   )
 }

@@ -16,6 +16,10 @@ import RamDetails from "./types/RamDetails";
 import Loader from "../common/ui/Loader";
 import { useFetchByType } from "../../hooks/useFetch";
 import ErrorPage from "../common/ui/ErrorPage";
+import ProcesadorDetails from "./types/ProcesadorDetails";
+import { Grafica, Procesador, Ram, Placa } from '../../interfaces/product';
+import GraficaDetails from "./types/GraficaDetails";
+import PlacaDetails from "./types/PlacaDetails";
 
 const DEFAULT_IMAGE_URL =
   "https://static.vecteezy.com/system/resources/thumbnails/004/141/669/small_2x/no-photo-or-blank-image-icon-loading-images-or-missing-image-mark-image-not-available-or-image-coming-soon-sign-simple-nature-silhouette-in-frame-isolated-illustration-vector.jpg";
@@ -94,7 +98,10 @@ const ProductDetails = () => {
           <Text ml={2}>4.0</Text>
         </Flex>
 
-        {data?.pieza.tipoPieza === "RAM" && <RamDetails ram={data} />}
+        {data?.pieza.tipoPieza === "RAM" && <RamDetails ram={data as Ram} />}
+        {data?.pieza.tipoPieza === "PROCESADOR" && <ProcesadorDetails procesador={data as Procesador} />}
+        {data?.pieza.tipoPieza === "GRAFICA" && <GraficaDetails grafica={data as unknown as Grafica}/>}
+        {data?.pieza.tipoPieza === "PLACA" && <PlacaDetails placa={data as unknown as Placa}/>}
 
         <HStack spacing={4}>
           <HStack spacing={2} color="blue.500">
