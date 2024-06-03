@@ -1,18 +1,22 @@
 import { LoginUser, RegisterUser, ResponseUser } from "../interfaces/user";
 
+
+const BASE_URL = 'https://tecmatch.onrender.com'
+
+
 export const getPiezas = async () => {
-  const response = await fetch(`http://localhost:8080/api/v1/piezas`);
+  const response = await fetch(`${BASE_URL}/api/v1/piezas`);
   return await response.json()
 }
 
 export const getPiezaBytypeAndId = async (type: string, id: string) => {
-  const response = await fetch(`http://localhost:8080/api/v1/${type}/pieza/${id}`);
+  const response = await fetch(`${BASE_URL}/api/v1/${type}/pieza/${id}`);
   return await response.json()
 }
 
 export const postUser = async (data: RegisterUser): Promise<ResponseUser> => {
 
-  const response = await fetch(`http://localhost:8080/api/v1/usuarios`, {
+  const response = await fetch(`${BASE_URL}/api/v1/usuarios`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'
@@ -31,7 +35,7 @@ export const postUser = async (data: RegisterUser): Promise<ResponseUser> => {
 
 export const postLogin = async (data: LoginUser): Promise<ResponseUser> => {
 
-  const response = await fetch(`http://localhost:8080/api/v1/usuarios/login`, {
+  const response = await fetch(`${BASE_URL}/api/v1/usuarios/login`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'
