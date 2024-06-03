@@ -1,13 +1,11 @@
 import { useQuery } from "react-query";
 import { Product, Ram } from "../interfaces/product";
+import { getPiezaBytypeAndId, getPiezas } from "../services/api";
 
 export const useFetchProduct = () => {
   return useQuery<Product[]>({
     queryKey: "products",
-    queryFn: async () => {
-      const response = await fetch(`http://localhost:8080/api/v1/piezas`);
-      return response.json();
-    }
+    queryFn: getPiezas
   })
 }
 
@@ -23,10 +21,7 @@ export const useFetchByType = ({
 
   return useQuery<Ram>({
     queryKey: [`${type}-${id}`],
-    queryFn: async () => {
-      const response = await fetch(`http://localhost:8080/api/v1/${type}/pieza/${id}`);
-      return response.json();
-    }
+    queryFn: () => getPiezaBytypeAndId(type, id)
   })
 }
 

@@ -1,9 +1,12 @@
-import { Box, Flex, Stack } from "@chakra-ui/react";
+import { Box, Button, Flex, Stack } from "@chakra-ui/react";
 
 import AvatarDropdown from "./AvatarDropdown";
-import { NavLink } from "react-router-dom";
+import { NavLink, Link } from "react-router-dom";
+import useUSerStore from "../../../store/useUserStore";
 
 const Navbar: React.FC = () => {
+  const isLogged = useUSerStore((state) => state.isLogged);
+
   return (
     <Box>
       <Flex
@@ -32,7 +35,18 @@ const Navbar: React.FC = () => {
           direction={"row"}
           spacing={6}
         >
-          <AvatarDropdown />
+          {isLogged && <AvatarDropdown />}
+          {!isLogged && (
+            <Button
+              colorScheme="yellow"
+              variant="outline"
+              as={Link}
+              to={"/login"}
+              _hover={{ bg: "yellow.600", color:"white" }}
+            >
+              Log In
+            </Button>
+          )}
         </Stack>
       </Flex>
     </Box>

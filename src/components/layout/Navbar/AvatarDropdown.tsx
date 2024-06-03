@@ -13,15 +13,17 @@ import {
 } from "@chakra-ui/react";
 
 import { NavLink, useNavigate, NavigateFunction } from "react-router-dom";
+import useUSerStore from "../../../store/useUserStore";
 
 const AvatarDropdown: React.FC = () => {
-  const imgUrl: string = "https://bit.ly/dan-abramov";
-
   const navigate: NavigateFunction = useNavigate();
 
   const handleLogOut = (): void => {
     navigate("/");
   };
+
+  const email = useUSerStore((state) => state.email);
+  const userName = useUSerStore((state) => state.userName);
 
   return (
     <Menu>
@@ -32,27 +34,17 @@ const AvatarDropdown: React.FC = () => {
         cursor={"pointer"}
         minW={0}
       >
-        <Avatar size={"md"} src={imgUrl} />
+        <Avatar size={"md"} name={"daniel cogollos"} bg="yellow.500" />
       </MenuButton>
 
       <MenuList alignItems={"center"}>
-        <Badge
-          variant="subtle"
-          colorScheme="green"
-          textAlign={"center"}
-          borderRadius={0}
-          fontStyle={"italic"}
-          bg={"primary.400"}
-          color={"white"}
-        >
-          Daniel Cogollos
-        </Badge>
         <Center>
-          <Avatar size={"xl"} src={imgUrl} />
+          <Avatar size={"xl"} name={"daniel cogollos"} bg="yellow.500" />
         </Center>
         <Center my={4}>
-          <Box alignItems={"center"}>
-            <Text fontWeight={500}>danielcogollos@gmail.com</Text>
+          <Box alignItems={"center"} textAlign="center">
+            <Text fontSize={"lg"}>{userName}</Text>
+            <Badge colorScheme="green">{email}</Badge>
           </Box>
         </Center>
 

@@ -1,0 +1,30 @@
+import { RegisterUser, ResponseUser } from "../interfaces/user";
+
+export const getPiezas = async () => {
+  const response = await fetch(`http://localhost:8080/api/v1/piezas`);
+  return await response.json()
+}
+
+export const getPiezaBytypeAndId = async (type: string, id: string) => {
+  const response = await fetch(`http://localhost:8080/api/v1/${type}/pieza/${id}`);
+  return await response.json()
+}
+
+export const postUser = async (data: RegisterUser): Promise<ResponseUser> => {
+
+  const response = await fetch(`http://localhost:8080/api/v1/usuarios`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(data)
+  });
+
+  if (!response.ok) {
+    throw new Error('Error al crear usuario')
+  }
+
+  return await response.json()
+
+}
+
