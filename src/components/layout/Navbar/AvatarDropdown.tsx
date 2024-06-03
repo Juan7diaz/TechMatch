@@ -35,12 +35,12 @@ const AvatarDropdown: React.FC = () => {
         cursor={"pointer"}
         minW={0}
       >
-        <Avatar size={"md"} name={"daniel cogollos"} bg="yellow.500" />
+        <Avatar size={"md"} name={userName} bg="yellow.500" />
       </MenuButton>
 
       <MenuList alignItems={"center"}>
         <Center>
-          <Avatar size={"xl"} name={"daniel cogollos"} bg="yellow.500" />
+          <Avatar size={"xl"} name={userName} bg="yellow.500" />
         </Center>
         <Center my={4}>
           <Box alignItems={"center"} textAlign="center">

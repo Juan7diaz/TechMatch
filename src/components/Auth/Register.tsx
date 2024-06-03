@@ -108,6 +108,8 @@ const Register = () => {
             type="submit"
             width="100%"
             _hover={{ bg: "yellow.600", color: "white" }}
+            isLoading={mutation.isLoading}
+            loadingText = "Cargando..."
           >
             Registrarse
           </Button>

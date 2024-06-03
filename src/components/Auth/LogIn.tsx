@@ -96,12 +96,14 @@ const LogIn = () => {
             type="submit"
             width="100%"
             _hover={{ bg: "yellow.600", color: "white" }}
+            isLoading={mutation.isLoading}
+            loadingText = "Cargando..."
           >
             Iniciar sesión
           </Button>
           <Box pt={4}>
             ¿No tienes cuenta?{" "}
-            <Link to="/register" style={{ color: "#b7791f" }}>
+            <Link to="/register" style={{ color: "#b7791f" }} >
               Regístrate
             </Link>
           </Box>
