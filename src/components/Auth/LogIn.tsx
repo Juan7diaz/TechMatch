@@ -77,7 +77,7 @@ const LogIn = () => {
         <form onSubmit={handleSubmit}>
           <Input
             mb={4}
-            placeholder="email"
+            placeholder="Nombre de usuario"
             name="nombreUsuario"
             value={dataUser.nombreUsuario}
             onChange={handleChange}
