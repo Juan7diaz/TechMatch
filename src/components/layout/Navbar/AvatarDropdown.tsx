@@ -19,6 +19,7 @@ const AvatarDropdown: React.FC = () => {
   const navigate: NavigateFunction = useNavigate();
 
   const handleLogOut = (): void => {
+    useUSerStore.getState().logOut();
     navigate("/");
   };
 
@@ -49,7 +50,7 @@ const AvatarDropdown: React.FC = () => {
         </Center>
 
         <MenuDivider />
-        <MenuItem as={NavLink} to={"/settigs"} borderRadius={10}>
+        <MenuItem as={NavLink} to={"/profile"} borderRadius={10}>
           Mi Perfil
         </MenuItem>
         <MenuItem onClick={handleLogOut} borderRadius={10}>

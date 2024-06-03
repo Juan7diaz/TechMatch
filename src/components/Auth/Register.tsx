@@ -6,7 +6,6 @@ import {
   Text,
   Alert,
   AlertIcon,
-  AlertTitle,
   AlertDescription,
 } from "@chakra-ui/react";
 import React, { useState } from "react";
@@ -67,9 +66,8 @@ const Register = () => {
       >
         {
           mutation.isError && (
-            <Alert status="error">
+            <Alert status="error" borderRadius={10}>
               <AlertIcon />
-              <AlertTitle mr={2}>Error al registrar</AlertTitle>
               <AlertDescription>
                 Hubo un error al registrar el usuario
               </AlertDescription>

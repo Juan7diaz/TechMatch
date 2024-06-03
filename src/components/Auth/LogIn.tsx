@@ -1,16 +1,36 @@
-import { Button, Flex, Input, Box, Text } from "@chakra-ui/react";
+import {
+  Button,
+  Flex,
+  Input,
+  Box,
+  Text,
+  Alert,
+  AlertIcon,
+  AlertDescription,
+} from "@chakra-ui/react";
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
-
-interface RegisterFormData {
-  email: string;
-  password: string;
-}
+import { useMutation } from "react-query";
+import { Link, useNavigate } from "react-router-dom";
+import { postLogin } from "../../services/api";
+import { LoginUser } from "../../interfaces/user";
+import useUSerStore from "../../store/useUserStore";
 
 const LogIn = () => {
-  const [dataUser, setDataUser] = useState<RegisterFormData>({
-    email: "",
+  const [dataUser, setDataUser] = useState<LoginUser>({
+    nombreUsuario: "",
     password: "",
+  });
+
+  const navigate = useNavigate();
+
+  const setUser = useUSerStore((state) => state.setDataUser);
+
+  const mutation = useMutation({
+    mutationFn: postLogin,
+    onSuccess: (data) => {
+      setUser(data);
+      navigate("/ecommerce");
+    },
   });
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -22,13 +42,17 @@ const LogIn = () => {
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log("Email:", dataUser.email);
-    console.log("Contraseña:", dataUser.password);
+    mutation.mutate(dataUser);
   };
 
   return (
-    <Flex alignItems="center" justifyContent="center" height="calc(100vh - 148px)"
-      backgroundImage={'url("https://img.freepik.com/foto-gratis/fondo-cosmico-luces-laser-azul-claro-oscuro-perfecto-fondo-pantalla-digital_181624-23690.jpg")'}
+    <Flex
+      alignItems="center"
+      justifyContent="center"
+      height="calc(100vh - 148px)"
+      backgroundImage={
+        'url("https://img.freepik.com/foto-gratis/fondo-cosmico-luces-laser-azul-claro-oscuro-perfecto-fondo-pantalla-digital_181624-23690.jpg")'
+      }
     >
       <Box
         bg="white"
@@ -38,6 +62,15 @@ const LogIn = () => {
         maxWidth="400px"
         width="100%"
       >
+        {mutation.isError && (
+          <Alert status="error" borderRadius={60}>
+            <AlertIcon />
+            <AlertDescription>
+              Hubo un error al registrar el usuario
+            </AlertDescription>
+          </Alert>
+        )}
+
         <Text fontSize="2xl" fontWeight="bold" mb={4}>
           Iniciar sesión
         </Text>
@@ -45,8 +78,8 @@ const LogIn = () => {
           <Input
             mb={4}
             placeholder="email"
-            name="email"
-            value={dataUser.email}
+            name="nombreUsuario"
+            value={dataUser.nombreUsuario}
             onChange={handleChange}
           />
           <Input
@@ -62,7 +95,7 @@ const LogIn = () => {
             variant={"outline"}
             type="submit"
             width="100%"
-            _hover={{ bg: "yellow.600", color:"white" }}
+            _hover={{ bg: "yellow.600", color: "white" }}
           >
             Iniciar sesión
           </Button>

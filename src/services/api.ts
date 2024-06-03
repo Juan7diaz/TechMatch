@@ -1,4 +1,4 @@
-import { RegisterUser, ResponseUser } from "../interfaces/user";
+import { LoginUser, RegisterUser, ResponseUser } from "../interfaces/user";
 
 export const getPiezas = async () => {
   const response = await fetch(`http://localhost:8080/api/v1/piezas`);
@@ -28,3 +28,21 @@ export const postUser = async (data: RegisterUser): Promise<ResponseUser> => {
 
 }
 
+
+export const postLogin = async (data: LoginUser): Promise<ResponseUser> => {
+
+  const response = await fetch(`http://localhost:8080/api/v1/usuarios/login`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(data)
+  });
+
+  if (!response.ok) {
+    throw new Error('Error al iniciar sesión')
+  }
+
+  return await response.json()
+
+}

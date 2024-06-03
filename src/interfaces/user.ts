@@ -10,3 +10,8 @@ export interface ResponseUser {
   correoElectronico: string;
   nombreUsuario: string;
 }
+
+export interface LoginUser {
+  nombreUsuario: string;
+  password: string;
+}
