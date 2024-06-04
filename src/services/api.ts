@@ -1,8 +1,8 @@
 import { LoginUser, RegisterUser, ResponseUser } from "../interfaces/user";
 
 
-//const BASE_URL = 'https://tecmatch.onrender.com'
-const BASE_URL = 'http://localhost:8080'
+const BASE_URL = 'https://tecmatch.onrender.com'
+//const BASE_URL = 'http://localhost:8080'
 
 export const getPiezas = async () => {
   const response = await fetch(`${BASE_URL}/api/v1/piezas`);
