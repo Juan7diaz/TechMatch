@@ -6,6 +6,7 @@ import Ecommerce from "../components/Ecommerce/Ecommerce";
 import ProductDetails from '../components/ProductDetails/ProductDetails';
 import LogIn from '../components/Auth/LogIn';
 import Register from "../components/Auth/Register";
+import ConstructionList from "../components/ConstructionList /ConstructionList";
 
 const router = createBrowserRouter([
   {
@@ -32,6 +33,10 @@ const router = createBrowserRouter([
         path: routes.REGISTER,
         element: <Register />,
       },
+      {
+        path: routes.CONSTRUCTIONLIST,
+        element: <ConstructionList/>,
+      }
     ],
   },
 ]);

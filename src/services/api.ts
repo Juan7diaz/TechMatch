@@ -102,3 +102,18 @@ export const deleteReviewById = async (id: string) => {
   return response
 
 }
+
+
+export const getAvgRatingByPiezaId = async (id: string) => {
+
+  const response = await fetch(`${BASE_URL}/api/v1/reviews/pieza/${id}/calificacion-promedio`);
+
+  console.log(response)
+
+  if (!response.ok) {
+    throw new Error('Error al obtener el promedio de rating')
+  }
+
+  return await response.json()
+
+}
