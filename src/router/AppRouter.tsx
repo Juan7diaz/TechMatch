@@ -1,11 +1,12 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import routes from "./routes";
-import Layout from "../components/Layout/Layout";
+import Layout from "../components/layout/Layout";
 import LandingPage from "../components/LandingPage/LandingPage";
 import Ecommerce from "../components/Ecommerce/Ecommerce";
 import ProductDetails from '../components/ProductDetails/ProductDetails';
 import LogIn from '../components/Auth/LogIn';
 import Register from "../components/Auth/Register";
+import WishedList from "../components/WishedProducts/WishedList";
 
 const router = createBrowserRouter([
   {
@@ -35,6 +36,10 @@ const router = createBrowserRouter([
       {
         path: routes.REGISTER,
         element: <Register />,
+      },
+      {
+        path: routes.WISHED,
+        element: <WishedList />,
       },
     ],
   },

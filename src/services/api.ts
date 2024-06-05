@@ -1,9 +1,10 @@
 import { ResponseReview, ReviewPost } from "../interfaces/review.interface";
 import { LoginUser, RegisterUser, ResponseUser } from "../interfaces/user.interface";
+import { ResponseWishedProduct, WishedProductPost } from "../interfaces/wishedProduct.interface";
 
 
-// const BASE_URL = 'https://tecmatch.onrender.com'
-const BASE_URL = 'http://localhost:8080'
+const BASE_URL = 'https://tecmatch.onrender.com'
+//const BASE_URL = 'http://localhost:8080'
 
 
 // ===================== PIEZAS =========================================================================================================
@@ -98,6 +99,46 @@ export const deleteReviewById = async (id: string) => {
 
   if (!response.ok) {
     throw new Error('Error al eliminar review')
+  }
+
+  return response
+
+}
+// ===================== Lista de deseados =========================================================================================================
+export const postPiezaDeseada = async (data: WishedProductPost): Promise<ResponseWishedProduct> =>{
+  const response = await fetch(`${BASE_URL}/api/v1/piezas-deseadas`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(data)
+  });
+  if (!response.ok) {
+    throw new Error('Error al añadir una pieza a la lista de deseados')
+  }
+
+  return await response.json()
+}
+
+export const getPiezasDeseadasByUsuarioId = async (id: string): Promise<ResponseWishedProduct[]> => {
+
+  const response = await fetch(`${BASE_URL}/api/v1/piezas-deseadas/usuario/${id}`);
+
+  if (!response.ok) {
+    throw new Error('Error al obtener las piezas deseadas')
+  }
+
+  return await response.json()
+
+}
+export const deletePiezaDeseadaById = async (id: string) => {
+
+  const response = await fetch(`${BASE_URL}/api/v1/piezas-deseadas/${id}`, {
+    method: 'DELETE'
+  });
+
+  if (!response.ok) {
+    throw new Error('Error al eliminar una pieza de la lista de deseados')
   }
 
   return response
