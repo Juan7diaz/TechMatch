@@ -84,7 +84,7 @@ function DrawerFilter() {
           <DrawerHeader>Filtros</DrawerHeader>
           <DrawerBody>
             <FormControl onSubmit={updateFilters}>
-              <FormLabel>Tipo:</FormLabel>
+              <FormLabel>Tipo de pieza:</FormLabel>
               <Select
                 placeholder={queryFilter.type}
                 mb={4}
@@ -114,7 +114,7 @@ function DrawerFilter() {
                 value={queryFilter.model}
                 onChange={(e) => setQueryFilter((state)=> ({...state, model: e.target.value.trim().toLowerCase()}))}
               />
-              <FormLabel>Precio Maximo:</FormLabel>
+              <FormLabel>Precio Maximo (USD):</FormLabel>
               <NumberInput
                 value={queryFilter.maxPrice}
                 mb={4}

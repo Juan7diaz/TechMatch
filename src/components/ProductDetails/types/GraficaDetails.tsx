@@ -7,16 +7,16 @@ const GraficaDetails = ({ grafica }: {grafica: Grafica}) => {
     <Text fontWeight="bold" fontSize="xl">
       Precio: $ {grafica.pieza.precio.toFixed(2)}
     </Text>
-    <Text>Voltaje: {grafica?.pieza.voltaje}</Text>
+    <Text>Voltaje: {grafica?.pieza.voltaje}W</Text>
     <Text>
       Socket: {grafica?.pieza.socket.tipoSocket.nombre} - {grafica?.pieza.socket.nombre}{" "}
     </Text>
-    <Text>Ancho de banda: {grafica.ancho_banda}</Text>
+    <Text>Ancho de banda: {grafica.ancho_banda} GB/s</Text>
     <Text>Cantidad de puerto display: {grafica.cant_DisplayPorts}</Text>
     <Text>Cantidad HDMI display: {grafica.cant_HDMI}</Text>
-    <Text>Frecuencia: {grafica.frecuencia}</Text>
+    <Text>Frecuencia: {grafica.frecuencia} GHz</Text>
     <Text>Interfaz de memoria: {grafica.interfaz_memoria}</Text>
-    <Text>Memoria: {grafica.memoria}</Text>
+    <Text>Memoria: {grafica.memoria}GB</Text>
     <Text>Nucleos: {grafica.nucleos}</Text>
     <Text>Ventiladores: {grafica.ventiladores}</Text>
     <Text>Modelo: {grafica.pieza.modelo}</Text>

@@ -7,7 +7,7 @@ const PlacaDetails = ({ placa }: {placa: Placa}) => {
     <Text fontWeight="bold" fontSize="xl">
       Precio: $ {placa.pieza.precio.toFixed(2)}
     </Text>
-    <Text>Voltaje: {placa?.pieza.voltaje}</Text>
+    <Text>Voltaje: {placa?.pieza.voltaje}W</Text>
     <Text>
       Socket: {placa?.pieza.socket.tipoSocket.nombre} - {placa?.pieza.socket.nombre}{" "}
     </Text>

@@ -52,7 +52,7 @@ function CardProduct({ product }: { product: Product }) {
           <Flex justifyContent="space-between" alignContent="center">
             <Box fontSize="xl" color={useColorModeValue("gray.800", "white")}>
               <Box as="span" color={"gray.600"} fontSize="lg">
-                COP{" "}
+                USD{" "}
               </Box>
               {product.precio.toFixed(2)}
             </Box>
