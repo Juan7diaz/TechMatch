@@ -2,7 +2,6 @@ import { ResponseReview, ReviewPost } from "../interfaces/review.interface";
 import { LoginUser, RegisterUser, ResponseUser } from "../interfaces/user.interface";
 import { ResponseWishedProduct, WishedProductPost } from "../interfaces/wishedProduct.interface";
 
-
 const BASE_URL = 'https://tecmatch.onrender.com'
 //const BASE_URL = 'http://localhost:8080'
 
@@ -105,7 +104,7 @@ export const deleteReviewById = async (id: string) => {
 
 }
 // ===================== Lista de deseados =========================================================================================================
-export const postPiezaDeseada = async (data: WishedProductPost): Promise<ResponseWishedProduct> =>{
+export const postPiezaDeseada = async (data: WishedProductPost): Promise<ResponseWishedProduct> => {
   const response = await fetch(`${BASE_URL}/api/v1/piezas-deseadas`, {
     method: 'POST',
     headers: {
@@ -126,6 +125,20 @@ export const getPiezasDeseadasByUsuarioId = async (id: string): Promise<Response
 
   if (!response.ok) {
     throw new Error('Error al obtener las piezas deseadas')
+  }
+
+  return await response.json()
+
+}
+
+export const getAvgRatingByPiezaId = async (id: string) => {
+
+  const response = await fetch(`${BASE_URL}/api/v1/reviews/pieza/${id}/calificacion-promedio`);
+
+  console.log(response)
+
+  if (!response.ok) {
+    throw new Error('Error al obtener el promedio de rating')
   }
 
   return await response.json()

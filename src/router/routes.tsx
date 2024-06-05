@@ -7,6 +7,7 @@ interface Routes {
   LOGIN: string,
   REGISTER: string,
   WISHED: string
+  CONSTRUCTIONLIST: string,
 }
 
 const routes:Routes = Object.freeze({
@@ -16,7 +17,8 @@ const routes:Routes = Object.freeze({
   PRODUCT_BY_ID: "/product/:id",
   LOGIN: "/login",
   REGISTER: "/register",
-  WISHED:"/wished-list"
+  WISHED:"/wished-list",
+  CONSTRUCTIONLIST: "/constructionlist",
 });
 
 export default routes;

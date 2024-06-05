@@ -17,9 +17,9 @@ import { useMutation } from "react-query";
 
 const Register = () => {
   const [formData, setFormData] = useState<RegisterUser>({
-    correoElectronico: "juan1@gmail.com",
-    password: "123",
-    nombreUsuario: "juan1",
+    correoElectronico: "",
+    password: "",
+    nombreUsuario: "",
     perm_admin: false,
   });
 
