@@ -10,7 +10,7 @@ const InputReviews = ({ piezaId , refetchReviews }: { piezaId: string, refetchRe
   const userId = useUSerStore((state) => state.id);
 
   const [comment, setComment] = useState<string>("");
-  const [rating, setRating] = useState<number>(0);
+  const [rating, setRating] = useState<number>(1);
 
   const handleRatingChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.valueAsNumber < 1 || e.target.valueAsNumber > 5) return;
@@ -22,6 +22,8 @@ const InputReviews = ({ piezaId , refetchReviews }: { piezaId: string, refetchRe
     mutationFn: postReview,
     onSuccess: () => {
       refetchReviews()
+      setComment("")
+      setRating(0)
     },
   });
 
