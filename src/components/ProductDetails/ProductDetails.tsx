@@ -9,7 +9,7 @@ import {
   Icon,
   Center,
 } from "@chakra-ui/react";
-import { BsTools, BsHeart, BsEye, BsArrowReturnLeft } from "react-icons/bs";
+import { BsTools, BsHeart, BsArrowReturnLeft } from "react-icons/bs";
 import { useNavigate, useParams, useSearchParams } from "react-router-dom";
 import { handleImageError } from "../../utils/handleImageError";
 import RamDetails from "./types/RamDetails";
@@ -27,6 +27,9 @@ import GraficaDetails from "./types/GraficaDetails";
 import PlacaDetails from "./types/PlacaDetails";
 import Rating from "../Reviews/rating";
 import Reviews from "../Reviews/Reviews";
+import { useMutation } from "react-query";
+import { postPiezaDeseada } from "../../services/api";
+import useUSerStore from "../../store/useUserStore";
 import {  useQuery } from "react-query";
 import { getAvgRatingByPiezaId } from "../../services/api";
 
@@ -42,6 +45,20 @@ const ProductDetails = () => {
   const { data, isLoading, isError } = useFetchByType({
     type: searchParams.get("type") || "",
     id: id || "",
+  });
+
+  const userId = useUSerStore((state) => state.id);
+
+  const mutation = useMutation({
+    mutationFn: () =>
+      postPiezaDeseada({
+        pieza: {
+          id: id || "",
+        },
+        usuario: {
+          id: userId,
+        },
+      }),
   });
 
 
@@ -115,8 +132,15 @@ const ProductDetails = () => {
             </HStack>
             <HStack spacing={2} color="red.500">
               <Icon as={BsHeart} />
-              <Text _hover={{ textDecoration: "underline", cursor: "pointer" }}>
-                Añadir a la lista de deseados
+              <Text
+                _hover={{ textDecoration: "underline", cursor: "pointer" }}
+                onClick={() => mutation.mutate()}
+              >
+                {mutation.isLoading && "Añadiendo a la lista de deseos..."}
+                {mutation.isSuccess && "Añadido a la lista de deseos!!"}
+                {mutation.isError && "Error al añadir a la lista de deseos!!"}
+                {!mutation.isLoading && !mutation.isSuccess && !mutation.isError && "Añadir a la lista de deseos"}
+
               </Text>
             </HStack>
           </HStack>
