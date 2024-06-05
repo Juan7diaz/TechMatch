@@ -7,7 +7,7 @@ import ProductDetails from '../components/ProductDetails/ProductDetails';
 import LogIn from '../components/Auth/LogIn';
 import Register from "../components/Auth/Register";
 import WishedList from "../components/WishedProducts/WishedList";
-import ConstructionList from "../components/ConstructionList /ConstructionList";
+import ConstructionList from "../components/ConstructionList/ConstructionList";
 
 const router = createBrowserRouter([
   {
