@@ -67,7 +67,6 @@ function DesiredItem({
         colorScheme="blue"
         variant="outline"
         isLoading={mutation.isLoading}
-        onClick={() => mutation.mutate()}
       />
       <IconButton
         ml={2}
