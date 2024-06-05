@@ -1,5 +1,5 @@
 import { Text, Stack } from '@chakra-ui/react'
-import { Procesador } from '../../../interfaces/product';
+import { Procesador } from '../../../interfaces/product.interface';
 
 const ProcesadorDetails = ({ procesador }: {procesador: Procesador}) => {
   return (

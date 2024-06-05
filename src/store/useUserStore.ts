@@ -1,5 +1,5 @@
 import { create } from "zustand";
-import {  ResponseUser } from "../interfaces/user";
+import {  ResponseUser } from "../interfaces/user.interface";
 
 interface UserStore {
   id: string

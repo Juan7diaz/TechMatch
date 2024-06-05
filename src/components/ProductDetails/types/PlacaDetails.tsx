@@ -1,5 +1,5 @@
 import { Text, Stack } from '@chakra-ui/react'
-import { Placa } from '../../../interfaces/product';
+import { Placa } from '../../../interfaces/product.interface';
 
 const PlacaDetails = ({ placa }: {placa: Placa}) => {
   return (

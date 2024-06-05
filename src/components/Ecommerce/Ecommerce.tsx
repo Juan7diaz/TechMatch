@@ -8,7 +8,7 @@ import useProductStore from "../../store/useProductStore";
 import Loader from "../common/ui/Loader";
 import useSearch from "../../hooks/useSearch";
 import useFilterProduct from "../../hooks/useFilterProduct";
-import { Product } from "../../interfaces/product";
+import { Product } from "../../interfaces/product.interface";
 
 function Ecommerce() {
 

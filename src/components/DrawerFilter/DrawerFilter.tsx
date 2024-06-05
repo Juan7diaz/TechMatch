@@ -88,7 +88,7 @@ function DrawerFilter() {
               <Select
                 placeholder={queryFilter.type}
                 mb={4}
-                onChange={(e) => setQueryFilter((state)=> ({...state, type: e.target.value}))}
+                onChange={(e) => setQueryFilter((state)=> ({...state, type: e.target.value.trim().toLowerCase()}))}
               >
                 <option value="">N/A</option>
                 <option value="RAM">RAM</option>
@@ -100,7 +100,7 @@ function DrawerFilter() {
               <Select
                 placeholder={queryFilter.company}
                 mb={4}
-                onChange={(e) => setQueryFilter((state)=> ({...state, company: e.target.value}))}
+                onChange={(e) => setQueryFilter((state)=> ({...state, company: e.target.value.trim().toLowerCase()}))}
               >
                 <option value="">N/A</option>
                 <option value="intel">Intel</option>
@@ -112,13 +112,13 @@ function DrawerFilter() {
               <Input
                 placeholder={queryFilter.model}
                 value={queryFilter.model}
-                onChange={(e) => setQueryFilter((state)=> ({...state, model: e.target.value}))}
+                onChange={(e) => setQueryFilter((state)=> ({...state, model: e.target.value.trim().toLowerCase()}))}
               />
               <FormLabel>Precio Maximo:</FormLabel>
               <NumberInput
                 value={queryFilter.maxPrice}
                 mb={4}
-                onChange={(e) => setQueryFilter((state)=> ({...state, maxPrice: e}))}
+                onChange={(e) => setQueryFilter((state)=> ({...state, maxPrice: e.trim()}))}
               >
                 <NumberInputField />
                 <NumberInputStepper>

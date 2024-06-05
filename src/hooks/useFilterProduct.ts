@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
-import { Product } from '../interfaces/product';
+import { Product } from '../interfaces/product.interface';
 import useProductStore from '../store/useProductStore';
 
 const useFilterProduct = () => {

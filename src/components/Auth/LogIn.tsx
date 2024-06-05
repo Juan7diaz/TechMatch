@@ -12,7 +12,7 @@ import React, { useState } from "react";
 import { useMutation } from "react-query";
 import { Link, useNavigate } from "react-router-dom";
 import { postLogin } from "../../services/api";
-import { LoginUser } from "../../interfaces/user";
+import { LoginUser } from "../../interfaces/user.interface";
 import useUSerStore from "../../store/useUserStore";
 
 const LogIn = () => {

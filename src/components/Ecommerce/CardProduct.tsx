@@ -6,7 +6,7 @@ import {
   Stack,
   useBreakpointValue,
 } from "@chakra-ui/react";
-import { Product } from "../../interfaces/product";
+import { Product } from "../../interfaces/product.interface";
 import { handleImageError } from "../../utils/handleImageError";
 import { Link } from "react-router-dom";
 

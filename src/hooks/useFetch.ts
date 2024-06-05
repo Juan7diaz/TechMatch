@@ -1,5 +1,5 @@
 import { useQuery } from "react-query";
-import { Procesador, Product, Ram } from "../interfaces/product";
+import { Procesador, Product, Ram } from "../interfaces/product.interface";
 import { getPiezaBytypeAndId, getPiezas } from "../services/api";
 
 export const useFetchProduct = () => {

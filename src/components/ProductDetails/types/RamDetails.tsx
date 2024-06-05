@@ -1,5 +1,5 @@
 import { Text, Stack } from '@chakra-ui/react'
-import { Ram } from '../../../interfaces/product'
+import { Ram } from '../../../interfaces/product.interface'
 
 const RamDetails = ({ ram }: {ram: Ram}) => {
   return (

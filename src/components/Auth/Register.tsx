@@ -10,7 +10,7 @@ import {
 } from "@chakra-ui/react";
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { RegisterUser } from "../../interfaces/user";
+import { RegisterUser } from "../../interfaces/user.interface";
 import { postUser } from "../../services/api";
 import useUSerStore from "../../store/useUserStore";
 import { useMutation } from "react-query";
