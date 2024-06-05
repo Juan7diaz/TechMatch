@@ -50,8 +50,8 @@ const AvatarDropdown: React.FC = () => {
         </Center>
 
         <MenuDivider />
-        <MenuItem as={NavLink} to={"/profile"} borderRadius={10}>
-          Mi Perfil
+        <MenuItem as={NavLink} to={"/wished-list"} borderRadius={10}>
+          Mi lista de deseos
         </MenuItem>
         <MenuItem onClick={handleLogOut} borderRadius={10}>
           Cerrar Sesión

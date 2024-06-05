@@ -26,6 +26,9 @@ import GraficaDetails from "./types/GraficaDetails";
 import PlacaDetails from "./types/PlacaDetails";
 import Rating from "../Reviews/rating";
 import Reviews from "../Reviews/Reviews";
+import { useMutation } from "react-query";
+import { postPiezaDeseada } from "../../services/api";
+import useUSerStore from "../../store/useUserStore";
 
 const DEFAULT_IMAGE_URL =
   "https://static.vecteezy.com/system/resources/thumbnails/004/141/669/small_2x/no-photo-or-blank-image-icon-loading-images-or-missing-image-mark-image-not-available-or-image-coming-soon-sign-simple-nature-silhouette-in-frame-isolated-illustration-vector.jpg";
@@ -39,6 +42,20 @@ const ProductDetails = () => {
   const { data, isLoading, isError } = useFetchByType({
     type: searchParams.get("type") || "",
     id: id || "",
+  });
+
+  const userId = useUSerStore((state) => state.id);
+
+  const mutation = useMutation({
+    mutationFn: () =>
+      postPiezaDeseada({
+        pieza: {
+          id: id || "",
+        },
+        usuario: {
+          id: userId,
+        },
+      }),
   });
 
   if (isLoading) return <Loader />;
@@ -111,8 +128,15 @@ const ProductDetails = () => {
             </HStack>
             <HStack spacing={2} color="red.500">
               <Icon as={BsHeart} />
-              <Text _hover={{ textDecoration: "underline", cursor: "pointer" }}>
-                Añadir a la lista de deseados
+              <Text
+                _hover={{ textDecoration: "underline", cursor: "pointer" }}
+                onClick={() => mutation.mutate()}
+              >
+                {mutation.isLoading && "Añadiendo a la lista de deseos..."}
+                {mutation.isSuccess && "Añadido a la lista de deseos!!"}
+                {mutation.isError && "Error al añadir a la lista de deseos!!"}
+                {!mutation.isLoading && !mutation.isSuccess && !mutation.isError && "Añadir a la lista de deseos"}
+
               </Text>
             </HStack>
           </HStack>

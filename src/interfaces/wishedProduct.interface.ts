@@ -10,7 +10,7 @@ export interface WishedProductPost{
     }
 }
 export interface ResponseWishedProduct{
-    id: String;
+    id: string;
     usuario: ResponseUser;
     pieza: Product;
 }
