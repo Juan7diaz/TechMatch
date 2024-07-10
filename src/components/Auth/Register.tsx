@@ -7,12 +7,13 @@ import {
   Alert,
   AlertIcon,
   AlertDescription,
+  useColorModeValue,
 } from "@chakra-ui/react";
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { RegisterUser } from "../../interfaces/user.interface";
 import { postUser } from "../../services/api";
-import useUSerStore from "../../store/useUserStore";
+import useUserStore from "../../store/useUserStore";
 import { useMutation } from "react-query";
 
 const Register = () => {
@@ -23,9 +24,9 @@ const Register = () => {
     perm_admin: false,
   });
 
-  const setDataUser = useUSerStore((state) => state.setDataUser);
+  const setDataUser = useUserStore((state) => state.setDataUser);
 
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData((prevState) => ({
@@ -38,7 +39,7 @@ const Register = () => {
     mutationFn: postUser,
     onSuccess: (data) => {
       setDataUser(data);
-      navigate('/ecommerce')
+      navigate('/ecommerce');
     },
   });
 
@@ -47,44 +48,47 @@ const Register = () => {
     mutation.mutate(formData);
   };
 
+  const bgColor = useColorModeValue("white", "gray.700");
+  const inputBgColor = useColorModeValue("gray.100", "gray.600");
+  const boxShadowColor = useColorModeValue("lg", "dark-lg");
+
   return (
     <Flex
       alignItems="center"
       justifyContent="center"
-      height="calc(100vh - 148px)"
-      backgroundImage={
-        'url("https://img.freepik.com/foto-gratis/fondo-cosmico-luces-laser-azul-claro-oscuro-perfecto-fondo-pantalla-digital_181624-23690.jpg")'
-      }
+      height="80vh"
+      bg="linear-gradient(135deg, #1a1a1a 0%, #333 100%)"
     >
       <Box
-        bg="white"
-        p={6}
+        bg={bgColor}
+        p={8}
         rounded="md"
-        boxShadow="md"
+        boxShadow={boxShadowColor}
         maxWidth="400px"
         width="100%"
+        mx={4}
       >
-        {
-          mutation.isError && (
-            <Alert status="error" borderRadius={10}>
-              <AlertIcon />
-              <AlertDescription>
-                Hubo un error al registrar el usuario
-              </AlertDescription>
-            </Alert>
-          )
-        }
+        {mutation.isError && (
+          <Alert status="error" borderRadius={8} mb={4}>
+            <AlertIcon />
+            <AlertDescription>
+              Hubo un error al registrar el usuario
+            </AlertDescription>
+          </Alert>
+        )}
 
-        <Text fontSize="2xl" fontWeight="bold" mb={4}>
+        <Text fontSize="3xl" fontWeight="bold" mb={6} textAlign="center">
           Registro
         </Text>
         <form onSubmit={handleSubmit}>
           <Input
             mb={4}
-            placeholder="correoElectronico"
+            placeholder="Correo electrónico"
             name="correoElectronico"
             value={formData.correoElectronico}
             onChange={handleChange}
+            bg={inputBgColor}
+            _placeholder={{ color: "gray.500" }}
           />
           <Input
             mb={4}
@@ -93,6 +97,8 @@ const Register = () => {
             name="nombreUsuario"
             value={formData.nombreUsuario}
             onChange={handleChange}
+            bg={inputBgColor}
+            _placeholder={{ color: "gray.500" }}
           />
           <Input
             mb={4}
@@ -101,21 +107,23 @@ const Register = () => {
             name="password"
             value={formData.password}
             onChange={handleChange}
+            bg={inputBgColor}
+            _placeholder={{ color: "gray.500" }}
           />
           <Button
-            colorScheme="yellow"
-            variant={"outline"}
+            bg="linear-gradient(90deg, #f48c04, #ffc300)"
+            _hover={{ opacity: 0.8 }}
+            variant="solid"
             type="submit"
             width="100%"
-            _hover={{ bg: "yellow.600", color: "white" }}
             isLoading={mutation.isLoading}
-            loadingText = "Cargando..."
+            loadingText="Cargando..."
           >
             Registrarse
           </Button>
-          <Box pt={4}>
-            ya tienes cuenta?{" "}
-            <Link to="/login" style={{ color: "#b7791f" }}>
+          <Box textAlign="center" mt={4}>
+            ¿Ya tienes cuenta?{" "}
+            <Link to="/login" style={{ color: "#d69e2e", fontWeight: "bold" }}>
               Inicia sesión
             </Link>
           </Box>

@@ -1,64 +1,62 @@
 import {
-  Flex,
   Box,
   Image,
-  useColorModeValue,
-  Stack,
+  Text,
+  Button,
+  VStack,
+  Flex,
   useBreakpointValue,
 } from "@chakra-ui/react";
 import { Product } from "../../interfaces/product.interface";
 import { handleImageError } from "../../utils/handleImageError";
 import { Link } from "react-router-dom";
 
-const DEFAULT_IMAGE_URL =
-  "https://static.vecteezy.com/system/resources/thumbnails/004/141/669/small_2x/no-photo-or-blank-image-icon-loading-images-or-missing-image-mark-image-not-available-or-image-coming-soon-sign-simple-nature-silhouette-in-frame-isolated-illustration-vector.jpg";
+const DEFAULT_IMAGE_URL = "path/to/default/image.jpg";
 
 function CardProduct({ product }: { product: Product }) {
-  const cardWidth = useBreakpointValue({ base: "100%", sm: "300px" });
-  const imageWidth = useBreakpointValue({ base: "100%", sm: "300px" });
-  const imageHeight = useBreakpointValue({ base: "180px", sm: "180px" });
+  const cardWidth = useBreakpointValue({ base: "100%", sm: "240px" });
 
   return (
     <Box
       as={Link}
       to={`/product/${product.id}?type=${product.tipoPieza}`}
-      bg={"white"}
-      pb={10}
-      maxW={cardWidth}
-      minW={cardWidth}
+      width={cardWidth}
+      bg="white"
+      borderRadius="md"
       overflow="hidden"
-      _hover={{
-        transition: "transform 0.5s ease-in-out",
-        cursor: "pointer",
-        border: "1px solid",
-        borderColor: "gray.200",
-      }}
+      boxShadow="md"
+      display="flex"
+      flexDirection="column"
+      height="420px" // Fixed height for all cards
     >
-      <Stack direction={"column"}>
+      <Flex bg="gray.100" justify="center" align="center" flex="1" p={4}>
         <Image
           src={product.imagen}
-          alt={`Picture of ${product.nombre}`}
-          maxW={imageWidth}
-          minW={imageWidth}
-          maxH={imageHeight}
-          minH={imageHeight}
-          objectFit="cover"
+          alt={product.nombre}
+          objectFit="contain"
+          maxH="200px"
           onError={(e) => handleImageError(e, DEFAULT_IMAGE_URL)}
         />
-        <Box px={6} pt={2} flex="1">
-          <Box fontSize="lg" fontWeight="" mb={4} lineHeight="tight">
-            {product.nombre}
-          </Box>
-          <Flex justifyContent="space-between" alignContent="center">
-            <Box fontSize="xl" color={useColorModeValue("gray.800", "white")}>
-              <Box as="span" color={"gray.600"} fontSize="lg">
-                USD{" "}
-              </Box>
-              {product.precio.toFixed(2)}
-            </Box>
-          </Flex>
-        </Box>
-      </Stack>
+      </Flex>
+      <VStack spacing={2} p={4} align="stretch" flex="1">
+        <Text fontSize="sm" color="gray.500" noOfLines={1}>
+          {product.tipoPieza}
+        </Text>
+        <Text fontSize="md" fontWeight="bold" noOfLines={2}>
+          {product.nombre}
+        </Text>
+        <Text fontSize="xl" fontWeight="bold" color="orange.500">
+          ${product.precio.toFixed(2)}
+        </Text>
+      </VStack>
+      <Button
+        bg="linear-gradient(90deg, #f48c04, #ffc300)"
+        _hover={{ opacity: 0.8 }}
+        width="100%"
+        borderRadius="0"
+      >
+        Ver Especificaciónes
+      </Button>
     </Box>
   );
 }

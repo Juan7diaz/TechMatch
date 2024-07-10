@@ -28,6 +28,7 @@ const ErrorPage = () => {
         bgGradient="linear(to-r, yellow.400, yellow.500, yellow.600)"
         color="white"
         variant="solid"
+        _hover={{ opacity: 0.8 }}
       >
         Ir al inicio
       </Button>

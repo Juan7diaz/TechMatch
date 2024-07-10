@@ -8,10 +8,12 @@ const ButtonSearchProduct = ({
 }) => {
   return (
     <Button
-      borderRadius={100}
+      bg="linear-gradient(90deg, #f48c04, #ffc300)"
+      color="black"
+      rounded="full"
+      _hover={{ opacity: 0.8 }}
+      size="md"
       ml={5}
-      bg={"blue.400"}
-      color={"white"}
       onClick={() =>
         object_useSearch.setSearchParams({ search: object_useSearch.query })
       }

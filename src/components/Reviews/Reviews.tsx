@@ -6,6 +6,11 @@ import {
   IconButton,
   Badge,
   Divider,
+  VStack,
+  Spinner,
+  Alert,
+  AlertIcon,
+  Center,
 } from "@chakra-ui/react";
 import Rating from "./rating";
 import { ResponseReview } from "../../interfaces/review.interface";
@@ -19,23 +24,25 @@ import { Link } from "react-router-dom";
 const Reviews = ({ piezaId }: { piezaId: string }) => {
   const isLogged = useUSerStore((state) => state.isLogged);
 
-  const { data, refetch, isLoading } = useQuery({
+  const { data, refetch, isLoading, isError } = useQuery({
     queryKey: ["reviews", piezaId],
     queryFn: () => getReviewsByPiezaId(piezaId),
     keepPreviousData: true,
   });
 
   return (
-    <>
-      <Box mb={4} alignItems="center" mx={{ base: 3, lg: 20 }} rounded="md">
-        <Text fontWeight={"bold"}>Sección de reseñas</Text>
-        <Divider width={"100%"} height={"2px"} />
+    <VStack align="stretch" mx={{ base: 3, lg: 20 }} spacing={6}>
+      <Box>
+        <Text fontSize="2xl" fontWeight="bold" mb={2}>
+          Sección de reseñas
+        </Text>
+        <Divider />
         {!isLogged && !isLoading && (
           <Text
-            fontStyle={"italic"}
-            color={"gray.500"}
+            fontStyle="italic"
+            color="gray.500"
             as={Link}
-            to={"/login"}
+            to="/login"
             _hover={{ cursor: "pointer", color: "blue.300" }}
           >
             Para realizar una reseña debes iniciar sesión
@@ -47,6 +54,19 @@ const Reviews = ({ piezaId }: { piezaId: string }) => {
         <InputReviews piezaId={piezaId} refetchReviews={refetch} />
       )}
 
+      {isLoading && (
+        <Center>
+          <Spinner size="xl" />
+        </Center>
+      )}
+
+      {isError && (
+        <Alert status="error">
+          <AlertIcon />
+          Hubo un error al cargar las reseñas
+        </Alert>
+      )}
+
       {data &&
         data.map((review) => (
           <ReviewsCard
@@ -55,7 +75,7 @@ const Reviews = ({ piezaId }: { piezaId: string }) => {
             refetchReviews={refetch}
           />
         ))}
-    </>
+    </VStack>
   );
 };
 
@@ -77,49 +97,45 @@ const ReviewsCard = ({
     },
   });
 
-  const handleDetete = (id: string) => mutateDelete.mutate(id);
+  const handleDelete = (id: string) => mutateDelete.mutate(id);
 
   return (
     <Flex
-      mb={4}
-      alignItems="center"
-      bg="gray.100"
+      direction="column"
+      bg="gray.50"
       p={6}
-      mx={{ base: 3, lg: 20 }}
       rounded="md"
+      shadow="md"
+      w="full"
     >
-      <Box>
-        <Flex justifyContent="space-between" alignItems="center">
-          <Flex flex="1" gap="4" alignItems="center" flexWrap="wrap">
-            <Avatar name={review.usuario.nombreUsuario} />
-            <Box>
-              <Flex flex="1" gap="4" alignItems="center" flexWrap="wrap">
-                <Text fontWeight={"bold"}>{review.usuario.nombreUsuario}</Text>
-                {userId === review.usuario.id && (
-                  <Badge colorScheme="purple">Tu reseña</Badge>
-                )}
-              </Flex>
-              <Rating value={review.calificacion} />
-            </Box>
-          </Flex>
-          {userId === review.usuario.id && (
-            <Box>
-              <IconButton
-                mx={3}
-                variant="outline"
-                borderColor={"gray.300"}
-                aria-label="See menu"
-                icon={<BiTrash />}
-                isLoading={mutateDelete.isLoading}
-                onClick={() => handleDetete(review.id)}
-              />
-            </Box>
-          )}
+      <Flex justifyContent="space-between" alignItems="center">
+        <Flex gap={4} alignItems="center">
+          <Avatar name={review.usuario.nombreUsuario} />
+          <Box>
+            <Flex alignItems="center">
+              <Text fontWeight="bold">{review.usuario.nombreUsuario}</Text>
+              {userId === review.usuario.id && (
+                <Badge ml={2} colorScheme="purple">
+                  Tu reseña
+                </Badge>
+              )}
+            </Flex>
+            <Rating value={review.calificacion} />
+          </Box>
         </Flex>
-        <Text pt={4} color={"gray.600"}>
-          {review.descripcion}
-        </Text>
-      </Box>
+        {userId === review.usuario.id && (
+          <IconButton
+            aria-label="Delete review"
+            icon={<BiTrash />}
+            colorScheme="red"
+            onClick={() => handleDelete(review.id)}
+            isLoading={mutateDelete.isLoading}
+          />
+        )}
+      </Flex>
+      <Text mt={4} color="gray.600">
+        {review.descripcion}
+      </Text>
     </Flex>
   );
 };

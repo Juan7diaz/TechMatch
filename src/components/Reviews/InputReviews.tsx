@@ -4,9 +4,13 @@ import { useMutation } from "react-query";
 import { postReview } from "../../services/api";
 import useUSerStore from "../../store/useUserStore";
 
-const InputReviews = ({ piezaId , refetchReviews }: { piezaId: string, refetchReviews: () => void }) => {
-
-
+const InputReviews = ({
+  piezaId,
+  refetchReviews,
+}: {
+  piezaId: string;
+  refetchReviews: () => void;
+}) => {
   const userId = useUSerStore((state) => state.id);
 
   const [comment, setComment] = useState<string>("");
@@ -17,13 +21,12 @@ const InputReviews = ({ piezaId , refetchReviews }: { piezaId: string, refetchRe
     setRating(e.target.valueAsNumber);
   };
 
-
   const mutation = useMutation({
     mutationFn: postReview,
     onSuccess: () => {
-      refetchReviews()
-      setComment("")
-      setRating(0)
+      refetchReviews();
+      setComment("");
+      setRating(0);
     },
   });
 

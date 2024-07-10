@@ -3,18 +3,18 @@ import {
   Container,
   Stack,
   Text,
-  useColorModeValue,
 } from "@chakra-ui/react";
+import TechMatchImagotipo from "../../../assets/TechMatchImagotipo";
 
 const Footer: React.FC = () => {
   return (
     <Box
-      bg={"white"}
-      color={"gray.700"}
+      bg={"#1a1a1a"}
+      color={"white"}
       h={{ xl: "max-content" }}
       borderTop={1}
       borderStyle={"solid"}
-      borderColor={useColorModeValue("gray.200", "gray.900")}
+      borderColor={"#f48c04"}
     >
       <Container
         as={Stack}
@@ -26,13 +26,7 @@ const Footer: React.FC = () => {
         align={{ base: "center", md: "center" }}
         h={{ xl: "82px" }}
       >
-        <img
-          src={
-            "https://static.vecteezy.com/system/resources/thumbnails/027/142/314/small_2x/3d-computer-icons-png.png"
-          }
-          alt="logo"
-          width={50}
-        />
+       <TechMatchImagotipo  width={150} height={50} />
         <Text align={"center"}>
           © {new Date().getFullYear()} TechMatch. Todo los derechos reservados
         </Text>

@@ -8,17 +8,29 @@ const InputSearch = ({ object_useSearch }: { object_useSearch: UseSearch }) => {
       onChange={object_useSearch.handleChange}
       onKeyUp={object_useSearch.handleKeyPress}
       placeholder="Buscar..."
-      bg={"white"}
+      bg={"transparent"}
       color={"black"}
-      borderColor={"black"}
+      borderColor={"#F48C06"}
       maxW="lg"
       borderRadius={0}
-      borderTopColor={"white"}
-      borderRightColor={"white"}
-      borderStartColor={"white"}
+      borderTopColor={"transparent"}
+      borderRightColor={"transparent"}
+      borderStartColor={"transparent"}
       _focus={{
         outline: "none",
         boxShadow: "none",
+        borderTopColor: "transparent",
+        borderBottomColor: "#ffc300",
+        borderRightColor: "transparent",
+        borderStartColor: "transparent",
+      }}
+      _hover={{
+        outline: "none",
+        boxShadow: "none",
+        borderTopColor: "transparent",
+        borderBottomColor: "#ffc300",
+        borderRightColor: "transparent",
+        borderStartColor: "transparent",
       }}
     />
   );

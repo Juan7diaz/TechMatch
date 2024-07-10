@@ -57,8 +57,10 @@ export interface Product {
   imagen: string
   fabricante: Fabricante
   socket: Socket
-  tipoPieza: "RAM" | "GRAFICA" | "PLACA" | "PROCESADOR"
+  tipoPieza: Type
 }
+
+export type Type = "RAM" | "GRAFICA" | "PLACA" | "PROCESADOR"
 
 export interface Fabricante {
   id: string

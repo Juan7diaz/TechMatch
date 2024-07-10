@@ -7,13 +7,14 @@ import {
   Alert,
   AlertIcon,
   AlertDescription,
+  useColorModeValue,
 } from "@chakra-ui/react";
 import React, { useState } from "react";
 import { useMutation } from "react-query";
 import { Link, useNavigate } from "react-router-dom";
 import { postLogin } from "../../services/api";
 import { LoginUser } from "../../interfaces/user.interface";
-import useUSerStore from "../../store/useUserStore";
+import useUserStore from "../../store/useUserStore";
 
 const LogIn = () => {
   const [dataUser, setDataUser] = useState<LoginUser>({
@@ -23,7 +24,7 @@ const LogIn = () => {
 
   const navigate = useNavigate();
 
-  const setUser = useUSerStore((state) => state.setDataUser);
+  const setUser = useUserStore((state) => state.setDataUser);
 
   const mutation = useMutation({
     mutationFn: postLogin,
@@ -45,33 +46,27 @@ const LogIn = () => {
     mutation.mutate(dataUser);
   };
 
+  const bgColor = useColorModeValue("white", "gray.700");
+  const inputBgColor = useColorModeValue("gray.100", "gray.600");
+  const boxShadowColor = useColorModeValue("lg", "dark-lg");
+
   return (
     <Flex
       alignItems="center"
       justifyContent="center"
-      height="calc(100vh - 148px)"
-      backgroundImage={
-        'url("https://img.freepik.com/foto-gratis/fondo-cosmico-luces-laser-azul-claro-oscuro-perfecto-fondo-pantalla-digital_181624-23690.jpg")'
-      }
+      height="80vh"
+      bg="linear-gradient(135deg, #1a1a1a 0%, #333 100%)"
     >
       <Box
-        bg="white"
-        p={6}
+        bg={bgColor}
+        p={8}
         rounded="md"
-        boxShadow="md"
+        boxShadow={boxShadowColor}
         maxWidth="400px"
         width="100%"
+        mx={4}
       >
-        {mutation.isError && (
-          <Alert status="error" borderRadius={60}>
-            <AlertIcon />
-            <AlertDescription>
-              Hubo un error al registrar el usuario
-            </AlertDescription>
-          </Alert>
-        )}
-
-        <Text fontSize="2xl" fontWeight="bold" mb={4}>
+        <Text fontSize="3xl" fontWeight="bold" mb={6} textAlign="center">
           Iniciar sesión
         </Text>
         <form onSubmit={handleSubmit}>
@@ -81,6 +76,8 @@ const LogIn = () => {
             name="nombreUsuario"
             value={dataUser.nombreUsuario}
             onChange={handleChange}
+            bg={inputBgColor}
+            _placeholder={{ color: "gray.500" }}
           />
           <Input
             mb={4}
@@ -89,21 +86,35 @@ const LogIn = () => {
             name="password"
             value={dataUser.password}
             onChange={handleChange}
+            bg={inputBgColor}
+            _placeholder={{ color: "gray.500" }}
           />
+          {mutation.isError && (
+            <Alert status="error" borderRadius={8} mb={4}>
+              <AlertIcon />
+              <AlertDescription>
+                Hubo un error al iniciar sesión
+              </AlertDescription>
+            </Alert>
+          )}
           <Button
             colorScheme="yellow"
-            variant={"outline"}
+            bg="linear-gradient(90deg, #f48c04, #ffc300)"
+            _hover={{ opacity: 0.8 }}
+            variant="solid"
             type="submit"
             width="100%"
-            _hover={{ bg: "yellow.600", color: "white" }}
             isLoading={mutation.isLoading}
-            loadingText = "Cargando..."
+            loadingText="Cargando..."
           >
             Iniciar sesión
           </Button>
-          <Box pt={4}>
+          <Box textAlign="center" mt={4}>
             ¿No tienes cuenta?{" "}
-            <Link to="/register" style={{ color: "#b7791f" }} >
+            <Link
+              to="/register"
+              style={{ color: "#d69e2e", fontWeight: "bold" }}
+            >
               Regístrate
             </Link>
           </Box>

@@ -26,7 +26,6 @@ import { useState } from "react";
 
 interface QueryFilter {
   maxPrice: string;
-  model: string;
   company: string;
   type: string;
 }
@@ -39,7 +38,6 @@ function DrawerFilter() {
 
   const [queryFilter, setQueryFilter] = useState<QueryFilter>({
     maxPrice: searchParams.get("maxPrice") || "",
-    model: searchParams.get("model") || "",
     company: searchParams.get("company") || "",
     type: searchParams.get("type") || "",
   });
@@ -55,7 +53,6 @@ function DrawerFilter() {
     if (queryFilter.maxPrice) params.maxPrice = queryFilter.maxPrice;
     if (queryFilter.company) params.company = queryFilter.company;
     if (queryFilter.type) params.type = queryFilter.type;
-    if (queryFilter.model) params.model = queryFilter.model;
 
     setSearchParams(() => params);
   };
@@ -67,7 +64,7 @@ function DrawerFilter() {
         onClick={onOpen}
         colorScheme="transparent"
         border={"1px"}
-        color={"black"}
+        color={"#F48C06"}
         aria-label="Search database"
         borderRadius={0}
         icon={<Filter />}
@@ -88,7 +85,12 @@ function DrawerFilter() {
               <Select
                 placeholder={queryFilter.type}
                 mb={4}
-                onChange={(e) => setQueryFilter((state)=> ({...state, type: e.target.value.trim().toLowerCase()}))}
+                onChange={(e) =>
+                  setQueryFilter((state) => ({
+                    ...state,
+                    type: e.target.value.trim().toLowerCase(),
+                  }))
+                }
               >
                 <option value="">N/A</option>
                 <option value="RAM">RAM</option>
@@ -100,7 +102,12 @@ function DrawerFilter() {
               <Select
                 placeholder={queryFilter.company}
                 mb={4}
-                onChange={(e) => setQueryFilter((state)=> ({...state, company: e.target.value.trim().toLowerCase()}))}
+                onChange={(e) =>
+                  setQueryFilter((state) => ({
+                    ...state,
+                    company: e.target.value.trim().toLowerCase(),
+                  }))
+                }
               >
                 <option value="">N/A</option>
                 <option value="intel">Intel</option>
@@ -108,17 +115,13 @@ function DrawerFilter() {
                 <option value="mediatek">Mediatek</option>
                 <option value="tsmc">TSMC</option>
               </Select>
-              <FormLabel>Modelo (Espacio para N/A):</FormLabel>
-              <Input
-                placeholder={queryFilter.model}
-                value={queryFilter.model}
-                onChange={(e) => setQueryFilter((state)=> ({...state, model: e.target.value.trim().toLowerCase()}))}
-              />
               <FormLabel>Precio Maximo (USD):</FormLabel>
               <NumberInput
                 value={queryFilter.maxPrice}
                 mb={4}
-                onChange={(e) => setQueryFilter((state)=> ({...state, maxPrice: e.trim()}))}
+                onChange={(e) =>
+                  setQueryFilter((state) => ({ ...state, maxPrice: e.trim() }))
+                }
               >
                 <NumberInputField />
                 <NumberInputStepper>
@@ -129,7 +132,12 @@ function DrawerFilter() {
             </FormControl>
           </DrawerBody>
           <DrawerFooter display="flex" justifyContent="center">
-            <Button colorScheme="blue" onClick={updateFilters}>
+            <Button
+              onClick={updateFilters}
+              bg="linear-gradient(90deg, #f48c04, #ffc300)"
+              rounded="full"
+              size="md"
+            >
               Filtrar búsqueda
             </Button>
           </DrawerFooter>

@@ -1,59 +1,72 @@
-import { Button, Flex, Text } from "@chakra-ui/react";
-import { getPiezasDeseadasByUsuarioId } from "../../services/api";
-import useUSerStore from "../../store/useUserStore";
-import DesiredItem from "./DesiredItem";
-import { useEffect } from "react";
+import React, { useMemo } from "react";
+import { Container, Heading, Flex, Box } from "@chakra-ui/react";
 import { useQuery } from "react-query";
-import Loader from "../common/ui/Loader";
 import { useNavigate } from "react-router-dom";
+import useUserStore from "../../store/useUserStore";
+import { getPiezasDeseadasByUsuarioId } from "../../services/api";
+import Loader from "../common/ui/Loader";
+import EmptyWishlist from "./EmptyWishlist";
+import WishlistItems from "./WishlistItems";
+import PurchaseSummary from "./PurchaseSummary";
+import { handleWhatsAppClick } from "../../utils/handleWhatsAppClick";
 
 function WishedList() {
-  const usuarioId = useUSerStore((state) => state.id);
-  const isLogged = useUSerStore((state) => state.isLogged);
+  const usuarioId = useUserStore((state) => state.id);
+  const isLogged = useUserStore((state) => state.isLogged);
+  const navigate = useNavigate();
 
   const { data, isLoading, refetch } = useQuery({
     queryFn: () => getPiezasDeseadasByUsuarioId(usuarioId),
     queryKey: ["desiredItems", usuarioId],
   });
 
-  const navigate = useNavigate();
-
-  console.log(data);
-
-  useEffect(() => {
+  React.useEffect(() => {
     if (!isLogged) {
       navigate("/login");
     }
-  }, [isLogged]);
+  }, [isLogged, navigate]);
+
+  const metadata = useMemo(() => {
+    const subtotal =
+      data?.reduce((acc, item) => acc + item.pieza.precio, 0) || 0;
+    const iva = subtotal * 0.19;
+    const deliveryCost = 10000;
+    const total = subtotal + iva + deliveryCost;
+    return { subtotal, iva, deliveryCost, total };
+  }, [data]);
+
+
+  if (isLoading) return <Loader />;
+
+  const onWhatsAppClick = () => {
+    handleWhatsAppClick(data!, metadata, "+573228199152", usuarioId)
+  }
 
   return (
-    <Flex
-      justifyContent="center"
-      alignItems="center"
-      flexDirection="column"
-      m={4}
-    >
-      <Text fontSize="2xl" fontWeight="bold" mb={4}>
-        Lista de Deseados
-      </Text>
+    <Container maxW="container.xl" py={10}>
+      <Heading as="h1" size="2xl" textAlign="center" mb={10}>
+        Tu Lista de Deseos
+      </Heading>
 
-      {isLoading && <Loader />}
-
-      {data?.length === 0 && (
-        <Flex justify={"center"} alignItems={"center"} flexDirection={"column"}>
-          <Text fontSize="lg" fontWeight="bold" pb={5} color={"gray.700"}>
-            No tienes productos deseados
-          </Text>
-          <Button onClick={() => navigate("/ecommerce")} colorScheme="yellow">
-            Ir a la tienda
-          </Button>
+      {data?.length === 0 ? (
+        <EmptyWishlist />
+      ) : (
+        <Flex direction={{ base: "column", md: "row" }} gap={10}>
+          <Box flex={2}>
+            <WishlistItems items={data || []} refetch={refetch} />
+          </Box>
+          <Box flex={1}>
+            <PurchaseSummary
+              subtotal={metadata.subtotal}
+              iva={metadata.iva}
+              deliveryCost={metadata.deliveryCost}
+              total={metadata.total}
+              onWhatsAppClick={onWhatsAppClick}
+            />
+          </Box>
         </Flex>
       )}
-
-      {data?.map((item) => (
-        <DesiredItem item={item} refetch={refetch}/>
-      ))}
-    </Flex>
+    </Container>
   );
 }
 

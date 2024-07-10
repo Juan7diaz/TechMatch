@@ -1,27 +1,53 @@
-import { Text, Stack } from '@chakra-ui/react'
+import { Text, Stack, Box, Heading, Divider } from '@chakra-ui/react';
 import { Grafica } from '../../../interfaces/product.interface';
 
 const GraficaDetails = ({ grafica }: {grafica: Grafica}) => {
   return (
-    <Stack spacing={2}>
-    <Text fontWeight="bold" fontSize="xl">
-      Precio: $ {grafica.pieza.precio.toFixed(2)}
-    </Text>
-    <Text>Voltaje: {grafica?.pieza.voltaje}W</Text>
-    <Text>
-      Socket: {grafica?.pieza.socket.tipoSocket.nombre} - {grafica?.pieza.socket.nombre}{" "}
-    </Text>
-    <Text>Ancho de banda: {grafica.ancho_banda} GB/s</Text>
-    <Text>Cantidad de puerto display: {grafica.cant_DisplayPorts}</Text>
-    <Text>Cantidad HDMI display: {grafica.cant_HDMI}</Text>
-    <Text>Frecuencia: {grafica.frecuencia} GHz</Text>
-    <Text>Interfaz de memoria: {grafica.interfaz_memoria}</Text>
-    <Text>Memoria: {grafica.memoria}GB</Text>
-    <Text>Nucleos: {grafica.nucleos}</Text>
-    <Text>Ventiladores: {grafica.ventiladores}</Text>
-    <Text>Modelo: {grafica.pieza.modelo}</Text>
-  </Stack>
-  )
-}
+    <Box p={4} borderWidth={1} borderRadius="lg" shadow="md" bg="white">
+      <Heading size="md" mb={4}>
+        Detalles de la Gráfica
+      </Heading>
+      <Divider mb={4} />
+      <Stack spacing={2}>
+        <Text fontWeight="bold" fontSize="xl" color="#f48c04">
+          Precio: $ {grafica.pieza.precio.toFixed(2)}
+        </Text>
+        <Text>
+          <Text as="span" fontWeight="semibold">Voltaje:</Text> {grafica?.pieza.voltaje}W
+        </Text>
+        <Text>
+          <Text as="span" fontWeight="semibold">Socket:</Text> {grafica?.pieza.socket.tipoSocket.nombre} - {grafica?.pieza.socket.nombre}
+        </Text>
+        <Text>
+          <Text as="span" fontWeight="semibold">Ancho de banda:</Text> {grafica.ancho_banda} GB/s
+        </Text>
+        <Text>
+          <Text as="span" fontWeight="semibold">Cantidad de puertos Display:</Text> {grafica.cant_DisplayPorts}
+        </Text>
+        <Text>
+          <Text as="span" fontWeight="semibold">Cantidad de puertos HDMI:</Text> {grafica.cant_HDMI}
+        </Text>
+        <Text>
+          <Text as="span" fontWeight="semibold">Frecuencia:</Text> {grafica.frecuencia} GHz
+        </Text>
+        <Text>
+          <Text as="span" fontWeight="semibold">Interfaz de memoria:</Text> {grafica.interfaz_memoria}
+        </Text>
+        <Text>
+          <Text as="span" fontWeight="semibold">Memoria:</Text> {grafica.memoria}GB
+        </Text>
+        <Text>
+          <Text as="span" fontWeight="semibold">Núcleos:</Text> {grafica.nucleos}
+        </Text>
+        <Text>
+          <Text as="span" fontWeight="semibold">Ventiladores:</Text> {grafica.ventiladores}
+        </Text>
+        <Text>
+          <Text as="span" fontWeight="semibold">Modelo:</Text> {grafica.pieza.modelo}
+        </Text>
+      </Stack>
+    </Box>
+  );
+};
 
-export default GraficaDetails
+export default GraficaDetails;

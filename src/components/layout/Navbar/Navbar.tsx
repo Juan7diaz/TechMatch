@@ -1,9 +1,8 @@
 import { Box, Button, Flex, Stack } from "@chakra-ui/react";
-
 import AvatarDropdown from "./AvatarDropdown";
 import { NavLink, Link } from "react-router-dom";
 import useUSerStore from "../../../store/useUserStore";
-
+import TechMatchImagotipo from "../../../assets/TechMatchImagotipo";
 
 const Navbar: React.FC = () => {
   const isLogged = useUSerStore((state) => state.isLogged);
@@ -11,7 +10,7 @@ const Navbar: React.FC = () => {
   return (
     <Box>
       <Flex
-        bg={"gray.800"}
+        bg={"#1a1a1a"}
         minH={"60px"}
         py={{ base: 2 }}
         px={{ base: 5 }}
@@ -20,13 +19,7 @@ const Navbar: React.FC = () => {
       >
         <Flex flex={{ base: 1 }} justify={{ md: "start" }} alignItems="center">
           <Box display={{ md: "block" }} mr={5} as={NavLink} to={"/"}>
-            <img
-              src={
-                "https://static.vecteezy.com/system/resources/thumbnails/027/142/314/small_2x/3d-computer-icons-png.png"
-              }
-              alt="logo"
-              width={50}
-            />
+            <TechMatchImagotipo width={150} height={50} />
           </Box>
         </Flex>
 
@@ -39,13 +32,15 @@ const Navbar: React.FC = () => {
           {isLogged && <AvatarDropdown />}
           {!isLogged && (
             <Button
-              colorScheme="yellow"
-              variant="outline"
+              color="black"
+              bg="linear-gradient(90deg, #f48c04, #ffc300)"
+              _hover={{ opacity: 0.8 }}
+              rounded="full"
+              size="md"
               as={Link}
               to={"/login"}
-              _hover={{ bg: "yellow.600", color:"white" }}
             >
-              Log In
+              Ingresar
             </Button>
           )}
         </Stack>

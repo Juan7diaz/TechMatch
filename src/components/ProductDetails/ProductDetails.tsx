@@ -6,148 +6,123 @@ import {
   Heading,
   Stack,
   HStack,
-  Icon,
-  Center,
+  Button,
+  Badge,
+  Tabs,
+  TabList,
+  TabPanels,
+  Tab,
+  TabPanel,
 } from "@chakra-ui/react";
-import { BsTools, BsHeart, BsArrowReturnLeft } from "react-icons/bs";
-import { useNavigate, useParams, useSearchParams } from "react-router-dom";
+import { BsHeart, BsArrowLeft, BsInfoCircle } from "react-icons/bs";
+import { useNavigate } from "react-router-dom";
 import { handleImageError } from "../../utils/handleImageError";
-import RamDetails from "./types/RamDetails";
-import Loader from "../common/ui/Loader";
-import { useFetchByType } from "../../hooks/useFetch";
 import ErrorPage from "../common/ui/ErrorPage";
-import ProcesadorDetails from "./types/ProcesadorDetails";
-import {
-  Grafica,
-  Procesador,
-  Ram,
-  Placa,
-} from "../../interfaces/product.interface";
-import GraficaDetails from "./types/GraficaDetails";
-import PlacaDetails from "./types/PlacaDetails";
-import Rating from "../Reviews/rating";
+import Loader from "../common/ui/Loader";
 import Reviews from "../Reviews/Reviews";
-import { useMutation } from "react-query";
-import { postPiezaDeseada } from "../../services/api";
-import useUSerStore from "../../store/useUserStore";
-import {  useQuery } from "react-query";
-import { getAvgRatingByPiezaId } from "../../services/api";
+import Rating from "../Reviews/rating";
+import { getComponentByType } from "../../utils/getComponentByType";
+import useProductDetails from "../../hooks/useProductDetails";
 
 const DEFAULT_IMAGE_URL =
-  "https://static.vecteezy.com/system/resources/thumbnails/004/141/669/small_2x/no-photo-or-blank-image-icon-loading-images-or-missing-image-mark-image-not-available-or-image-coming-soon-sign-simple-nature-silhouette-in-frame-isolated-illustration-vector.jpg";
+  "https://via.placeholder.com/400x400.png?text=No+Image";
 
 const ProductDetails = () => {
   const navigate = useNavigate();
-  let { id } = useParams();
 
-  let [searchParams] = useSearchParams();
+  const { wishedList, product, rating, user } = useProductDetails();
 
-  const { data, isLoading, isError } = useFetchByType({
-    type: searchParams.get("type") || "",
-    id: id || "",
-  });
+  if (product.isLoading) return <Loader />;
 
-  const userId = useUSerStore((state) => state.id);
-
-  const mutation = useMutation({
-    mutationFn: () =>
-      postPiezaDeseada({
-        pieza: {
-          id: id || "",
-        },
-        usuario: {
-          id: userId,
-        },
-      }),
-  });
-
-
-  const { data: dataRaiting, isLoading: isLoadingRaiting} = useQuery({
-    queryKey: ["rating", id],
-    queryFn: () => getAvgRatingByPiezaId(id || ""),
-  });
-
-
-  if (isLoading) return <Loader />;
-
-  if (isError) return <ErrorPage />;
+  if (product.isError) return <ErrorPage />;
 
   return (
-    <>
-      <Flex
-        flexDirection={{ base: "column", lg: "row" }}
-        alignItems="center"
-        bg="gray.100"
-        p={6}
-        m={{ base: 3, lg: 6 }}
-        rounded="md"
-      >
-        <Box mr={{ base: 0, md: 8 }} mb={{ base: 4, md: 0 }}>
-          <Box mb={5}>
-            <HStack onClick={() => navigate(-1)}>
-              <Icon as={BsArrowReturnLeft} />
-              <Text _hover={{ textDecoration: "underline", cursor: "pointer" }}>
-                Regresar
-              </Text>
-            </HStack>
-          </Box>
+    <Box maxWidth="1200px" margin="auto" p={6}>
+      <Button leftIcon={<BsArrowLeft />} onClick={() => navigate(-1)} mb={6}>
+        Regresar
+      </Button>
+
+      <Flex direction={{ base: "column", md: "row" }} gap={8}>
+        <Box flex={1}>
           <Image
-            rounded="md"
-            src={data?.pieza.imagen}
-            alt="Product Image"
-            objectFit="cover"
+            src={product?.data?.pieza.imagen}
+            alt={product?.data?.pieza.nombre}
+            fallbackSrc={DEFAULT_IMAGE_URL}
             onError={(e) => handleImageError(e, DEFAULT_IMAGE_URL)}
-            maxH={{ base: 250, sm: 300, md: 350, lg: 400 }}
-            minH={{ base: 250, sm: 300, md: 350, lg: 400 }}
-            maxW={{ base: 250, sm: 300, md: 350, lg: 400 }}
-            minW={{ base: 250, sm: 300, md: 350, lg: 400 }}
+            objectFit="cover"
+            width="100%"
+            height="400px"
+            borderRadius="lg"
           />
-          <Center>
-            <Text color="gray.500" fontSize="sm" fontStyle={"italic"} pt={8}>
-              Incompatible con la lista de construcción
-            </Text>
-          </Center>
         </Box>
 
-        <Stack spacing={4} flex="1">
-          <Heading size="md">{data?.pieza.nombre}</Heading>
-          {!isLoadingRaiting && <Rating value={dataRaiting || 0} />}
-          {data?.pieza.tipoPieza === "RAM" && <RamDetails ram={data as Ram} />}
-          {data?.pieza.tipoPieza === "PROCESADOR" && (
-            <ProcesadorDetails procesador={data as Procesador} />
-          )}
-          {data?.pieza.tipoPieza === "GRAFICA" && (
-            <GraficaDetails grafica={data as unknown as Grafica} />
-          )}
-          {data?.pieza.tipoPieza === "PLACA" && (
-            <PlacaDetails placa={data as unknown as Placa} />
-          )}
-
-          <HStack spacing={4}>
-            <HStack spacing={2} color="blue.500">
-              <Icon as={BsTools} />
-              <Text _hover={{ textDecoration: "underline", cursor: "pointer" }}>
-                Añadir a lista de construcción de PC
-              </Text>
+        <Box flex={1}>
+          <Stack spacing={4}>
+            <Heading size="xl">{product?.data?.pieza.nombre}</Heading>
+            <HStack>
+              {!rating.isLoadingRaiting && (
+                <Rating value={rating.dataRaiting || 0} />
+              )}
             </HStack>
-            <HStack spacing={2} color="red.500">
-              <Icon as={BsHeart} />
-              <Text
-                _hover={{ textDecoration: "underline", cursor: "pointer" }}
-                onClick={() => mutation.mutate()}
-              >
-                {mutation.isLoading && "Añadiendo a la lista de deseos..."}
-                {mutation.isSuccess && "Añadido a la lista de deseos!!"}
-                {mutation.isError && "Error al añadir a la lista de deseos!!"}
-                {!mutation.isLoading && !mutation.isSuccess && !mutation.isError && "Añadir a la lista de deseos"}
-
-              </Text>
+            <Text fontSize="3xl" fontWeight="bold" color="#f48c04">
+              ${product?.data?.pieza.precio.toFixed(2)}
+            </Text>
+            <Text color={"black"}>{product?.data?.pieza.modelo}</Text>
+            <HStack>
+              {user.id && (
+                <Button
+                  leftIcon={<BsHeart />}
+                  onClick={wishedList.add}
+                  variant="outline"
+                  colorScheme="red"
+                  size="lg"
+                  isDisabled={wishedList.isLoading || wishedList.isSuccess}
+                >
+                  {wishedList.isLoading && "Añadiendo a la lista de deseos..."}
+                  {wishedList.isSuccess && "Añadido a la lista de deseos!!"}
+                  {wishedList.isError &&
+                    "Error al añadir a la lista de deseos!!"}
+                  {!wishedList.isLoading &&
+                    !wishedList.isSuccess &&
+                    !wishedList.isError &&
+                    "Añadir a la lista de deseos"}
+                </Button>
+              )}
+              {!user.id && (
+                <Button
+                  leftIcon={<BsInfoCircle />}
+                  onClick={() => navigate("/login")}
+                  variant="outline"
+                  colorScheme="blue"
+                  size="lg"
+                >
+                  Inicia sesión para añadir a la lista de deseos
+                </Button>
+              )}
             </HStack>
-          </HStack>
-        </Stack>
+          </Stack>
+        </Box>
       </Flex>
-      <Reviews piezaId={data?.pieza.id || ""} />
-    </>
+
+      <Tabs mt={12}>
+        <TabList>
+          <Tab>Especificaciones</Tab>
+          <Tab>Reseñas</Tab>
+        </TabList>
+
+        <TabPanels>
+          <TabPanel>
+            {getComponentByType({
+              data: product?.data!,
+              type: product?.data?.pieza.tipoPieza,
+            })}
+          </TabPanel>
+          <TabPanel>
+            <Reviews piezaId={product?.data?.pieza.id || ""} />
+          </TabPanel>
+        </TabPanels>
+      </Tabs>
+    </Box>
   );
 };
 
