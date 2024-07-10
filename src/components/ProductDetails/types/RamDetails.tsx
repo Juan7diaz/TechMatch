@@ -9,9 +9,6 @@ const RamDetails = ({ ram }: { ram: Ram }) => {
       </Heading>
       <Divider mb={4} />
       <Stack spacing={2}>
-        <Text fontWeight="bold" fontSize="xl" color="#f48c04">
-          Precio: $ {ram.pieza.precio.toFixed(2)}
-        </Text>
         <Text>
           <Text as="span" fontWeight="semibold">Voltaje:</Text> {ram?.pieza.voltaje}W
         </Text>

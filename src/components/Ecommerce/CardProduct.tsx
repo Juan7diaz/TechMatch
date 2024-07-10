@@ -10,16 +10,17 @@ import {
 import { Product } from "../../interfaces/product.interface";
 import { handleImageError } from "../../utils/handleImageError";
 import { Link } from "react-router-dom";
+import { currencyFormatter } from "../../utils/currencyFormatter";
 
 const DEFAULT_IMAGE_URL = "path/to/default/image.jpg";
 
 function CardProduct({ product }: { product: Product }) {
   const cardWidth = useBreakpointValue({ base: "100%", sm: "240px" });
 
+  const price = currencyFormatter({ currency: "COP", value: product.precio });
+
   return (
     <Box
-      as={Link}
-      to={`/product/${product.id}?type=${product.tipoPieza}`}
       width={cardWidth}
       bg="white"
       borderRadius="md"
@@ -46,10 +47,12 @@ function CardProduct({ product }: { product: Product }) {
           {product.nombre}
         </Text>
         <Text fontSize="xl" fontWeight="bold" color="orange.500">
-          ${product.precio.toFixed(2)}
+          {price}
         </Text>
       </VStack>
       <Button
+        as={Link}
+        to={`/product/${product.id}?type=${product.tipoPieza}`}
         bg="linear-gradient(90deg, #f48c04, #ffc300)"
         _hover={{ opacity: 0.8 }}
         width="100%"

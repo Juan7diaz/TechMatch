@@ -10,6 +10,7 @@ import {
 } from "@chakra-ui/react";
 import { FaStore, FaWhatsapp } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
+import { currencyFormatter } from "../../utils/currencyFormatter";
 
 interface PurchaseSummaryProps {
   subtotal: number;
@@ -29,6 +30,12 @@ const PurchaseSummary = ({
 
   const navigate = useNavigate();
 
+  const subtotal_formatter = currencyFormatter({ currency: "COP", value: subtotal || 0 });
+  const iva_formatter = currencyFormatter({ currency: "COP", value: iva || 0 });
+  const deliveryCost_formatter = currencyFormatter({ currency: "COP", value: deliveryCost || 0 });
+  const total_formatter = currencyFormatter({ currency: "COP", value: total || 0 });
+
+
   return (
     <Box bg={"white"} p={6} borderRadius="xl" boxShadow="md">
       <Heading as="h3" size="lg" mb={4}>
@@ -37,20 +44,20 @@ const PurchaseSummary = ({
       <VStack spacing={3} align="stretch">
         <HStack justify="space-between">
           <Text>Subtotal:</Text>
-          <Text fontWeight="bold">${subtotal.toFixed(2)}</Text>
+          <Text fontWeight="bold">{subtotal_formatter}</Text>
         </HStack>
         <HStack justify="space-between">
           <Text>IVA (19%):</Text>
-          <Text fontWeight="bold">${iva.toFixed(2)}</Text>
+          <Text fontWeight="bold">{iva_formatter}</Text>
         </HStack>
         <HStack justify="space-between">
           <Text>Costo de entrega (15%):</Text>
-          <Text fontWeight="bold">${deliveryCost.toFixed(2)}</Text>
+          <Text fontWeight="bold">{deliveryCost_formatter}</Text>
         </HStack>
         <Divider />
         <HStack justify="space-between" fontWeight="bold" fontSize="lg">
           <Text>Total:</Text>
-          <Text>${total.toFixed(2)} cop</Text>
+          <Text>{total_formatter}</Text>
         </HStack>
         <Button
           leftIcon={<Icon as={FaWhatsapp} />}

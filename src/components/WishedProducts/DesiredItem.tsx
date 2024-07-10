@@ -17,6 +17,7 @@ import { FaTrashAlt, FaInfoCircle, FaHeart } from "react-icons/fa";
 import { useMutation } from "react-query";
 import { deletePiezaDeseadaById } from "../../services/api";
 import { Link } from "react-router-dom";
+import { currencyFormatter } from "../../utils/currencyFormatter";
 
 const DEFAULT_IMAGE_URL = "path/to/default/image.jpg";
 
@@ -37,6 +38,8 @@ function DesiredItem({
   const bgColor = useColorModeValue("white", "gray.800");
   const textColor = useColorModeValue("gray.700", "white");
   const borderColor = useColorModeValue("gray.200", "gray.600");
+
+  const price = currencyFormatter({ currency: "COP", value: item.pieza.precio || 0 });
 
   return (
     <MotionBox
@@ -74,7 +77,7 @@ function DesiredItem({
           </VStack>
           <HStack justifyContent="space-between" alignItems="center" mt={2}>
             <Text fontWeight="bold" fontSize="xl" color="#f48c04">
-              ${item.pieza.precio.toFixed(2)}
+             {price}
             </Text>
             <HStack>
               <Tooltip label="Ver detalles" hasArrow>

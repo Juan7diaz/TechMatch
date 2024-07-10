@@ -9,9 +9,6 @@ const GraficaDetails = ({ grafica }: {grafica: Grafica}) => {
       </Heading>
       <Divider mb={4} />
       <Stack spacing={2}>
-        <Text fontWeight="bold" fontSize="xl" color="#f48c04">
-          Precio: $ {grafica.pieza.precio.toFixed(2)}
-        </Text>
         <Text>
           <Text as="span" fontWeight="semibold">Voltaje:</Text> {grafica?.pieza.voltaje}W
         </Text>

@@ -22,6 +22,7 @@ import Reviews from "../Reviews/Reviews";
 import Rating from "../Reviews/rating";
 import { getComponentByType } from "../../utils/getComponentByType";
 import useProductDetails from "../../hooks/useProductDetails";
+import { currencyFormatter } from "../../utils/currencyFormatter";
 
 const DEFAULT_IMAGE_URL =
   "https://via.placeholder.com/400x400.png?text=No+Image";
@@ -30,6 +31,8 @@ const ProductDetails = () => {
   const navigate = useNavigate();
 
   const { wishedList, product, rating, user } = useProductDetails();
+
+  const price = currencyFormatter({ currency: "COP", value: product.data?.pieza.precio || 0 });
 
   if (product.isLoading) return <Loader />;
 
@@ -64,7 +67,7 @@ const ProductDetails = () => {
               )}
             </HStack>
             <Text fontSize="3xl" fontWeight="bold" color="#f48c04">
-              ${product?.data?.pieza.precio.toFixed(2)}
+              {price}
             </Text>
             <Text color={"black"}>{product?.data?.pieza.modelo}</Text>
             <HStack>
