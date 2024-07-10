@@ -7,7 +7,6 @@ import {
   Stack,
   HStack,
   Button,
-  Badge,
   Tabs,
   TabList,
   TabPanels,

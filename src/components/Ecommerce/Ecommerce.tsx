@@ -3,7 +3,6 @@ import CardProduct from "./CardProduct";
 import DrawerFilter from "../DrawerFilter/DrawerFilter";
 import InputSearch from "../common/ui/InputSearch";
 import ButtonSearchProduct from "../common/ui/ButtonSearchProduct";
-import { Suspense } from "react";
 import useProductStore from "../../store/useProductStore";
 import Loader from "../common/ui/Loader";
 import useSearch from "../../hooks/useSearch";

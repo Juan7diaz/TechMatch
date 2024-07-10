@@ -39,7 +39,7 @@ function WishedList() {
   if (isLoading) return <Loader />;
 
   const onWhatsAppClick = () => {
-    handleWhatsAppClick(data!, metadata, "+573228199152", usuarioId)
+    handleWhatsAppClick(data!, metadata, "+573113981409", usuarioId)
   }
 
   return (

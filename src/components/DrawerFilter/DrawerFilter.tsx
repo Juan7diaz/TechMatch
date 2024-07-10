@@ -12,7 +12,6 @@ import {
   DrawerFooter,
   FormControl,
   FormLabel,
-  Input,
   NumberInput,
   NumberInputField,
   NumberInputStepper,
