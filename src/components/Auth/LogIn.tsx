@@ -18,8 +18,8 @@ import useUserStore from "../../store/useUserStore";
 
 const LogIn = () => {
   const [dataUser, setDataUser] = useState<LoginUser>({
-    nombreUsuario: "",
-    password: "",
+    nombreUsuario: "tester",
+    password: "tester",
   });
 
   const navigate = useNavigate();
